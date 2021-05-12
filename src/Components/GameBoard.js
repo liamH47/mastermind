@@ -1,6 +1,6 @@
 // import axios from 'axios'
 import React from 'react'
-import Select from './Select'
+import Form from './Form'
 
 
 
@@ -19,8 +19,10 @@ import Select from './Select'
 /**
  * next plans
  * 1. create inputs for secret code. they should be dropdowns with options of 0-7
- * 2. this should probably be a Select that is it's own component. on submit, it will 
- */
+ * 2. this should probably be a Select that is it's own component. on submit, it will check whether the user input matches secret code
+ * 3.  
+ 
+*/
 
 class GameBoard extends React.Component {
 
@@ -44,12 +46,7 @@ class GameBoard extends React.Component {
             <div>
                 <h1>Mastermind!</h1>
                 <button onClick={this.startGame}>Start Game</button>
-                <form>
-                    <Select />
-                    <Select />
-                    <Select />
-                    <Select />
-                </form>
+                <Form />
             </div>
         )
     }
