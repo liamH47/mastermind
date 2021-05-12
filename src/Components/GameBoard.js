@@ -31,8 +31,11 @@ class GameBoard extends React.Component {
             this.state = {
                 secretCode: [ 1, 2, 3, 4 ],
                 tries: 10,
-                gameStarted: false
+                gameStarted: false,
+                options: [0,1,2,3,4,5,6,7],
+                currentGuess: []
             };
+            this.submitHandler = this.submitHandler.bind(this)
             this.startGame = this.startGame.bind(this)
     }
 
@@ -41,12 +44,30 @@ class GameBoard extends React.Component {
         this.setState({ gameStarted: !this.state.gameStarted })
     }
 
+    changeHandler = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    submitHandler = (obj) => {
+        this.setState({ currentGuess: [] })
+        let guessArr = [];
+        for(let key in obj){
+            let plsWork = parseInt(obj[key])
+            guessArr.push(plsWork);
+        }
+        if(guessArr == this.state.secretCode){
+            console.log('correct!')
+        }      
+        this.setState({ currentGuess: guessArr })
+        console.log(this.state.currentGuess, this.state.secretCode);
+    }
+
     render() {
         return (
             <div>
                 <h1>Mastermind!</h1>
                 <button onClick={this.startGame}>Start Game</button>
-                <Form />
+                <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
             </div>
         )
     }
