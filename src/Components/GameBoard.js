@@ -56,16 +56,32 @@ class GameBoard extends React.Component {
         let included = 0;
         let rightSpot = 0;
         for(let i = 0; i < arr1.length; i++){
-            // if(arr1[i] === arr2[i]) rightSpot++
-            // if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
-            if(arr1[i] !==arr2[i]){
-                console.log('nope')
-                this.setState({ tries: this.state.tries - 1})
-                return false;
+          if(arr1[i] === arr2[i]) rightSpot++;
+          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
+        }
+        if(rightSpot === 4) console.log("you won!"); 
+        else {
+            this.setState({ tries: this.state.tries - 1 });
+            if(included + rightSpot === 0){
+                console.log("none of those are correct... at all") ;
+            } 
+            else {
+                console.log(`you got ${rightSpot} numbers in their correct place, and ${included} numbers that are in the code, but not in their correct place`); 
             }
         }
-        console.log('yup!')
-        return true;
+        // let included = 0;
+        // let rightSpot = 0;
+        // for(let i = 0; i < arr1.length; i++){
+        //     // if(arr1[i] === arr2[i]) rightSpot++
+        //     // if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
+        //     if(arr1[i] !==arr2[i]){
+        //         console.log('nope')
+        //         this.setState({ tries: this.state.tries - 1})
+        //         return false;
+        //     }
+        // }
+        // console.log('yup!')
+        // return true;
         /**
          * need to count 
          * 1. how many values are included but not in the right place
