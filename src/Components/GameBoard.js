@@ -3,18 +3,8 @@ import React from 'react';
 import Form from './Form';
 import GuessList from './GuessList';
 
-
-
-
-
 /**
- * next plans
- * 1. create inputs for secret code. they should be dropdowns with options of 0-7
- * 2. this should probably be a Select that is it's own component. on submit, it will check whether the user input matches secret code
- * 3. work on updating the amount of remaining tries when submit happens, also displaying the number of tries
- * 4. once tries are updating and displaying, show the details about the guesses
- * 5. create a past guesses component. every guess will be pushed into an array in state, and then each of those will be mapped into a guess that is an <li>
- 
+ * 
 */
 
 class GameBoard extends React.Component {
@@ -36,9 +26,9 @@ class GameBoard extends React.Component {
         this.setState({ gameStarted: !this.state.gameStarted })
     }
 
-    changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
-    }
+    // changeHandler = (e) => {
+    //     this.setState({ [e.target.name]: e.target.value })
+    // }
 
     submitHandler = (obj) => {
         let secret = this.state.secretCode
@@ -74,27 +64,6 @@ class GameBoard extends React.Component {
             }
             this.setState({ guesses: [...this.state.guesses, guessObj]});
         }
-        /**
-         *   let included = 0;
-            let rightSpot = 0;
-            let guessObj = {
-                guess: [],
-                feedback: ''
-            }
-            for(let i = 0; i < arr1.length; i++){
-                if(arr1[i] === arr2[i]) rightSpot++;
-                if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
-            }
-            if(rightSpot === 4) return "you won!"
-            guessObj.guess = arr1;
-            if(included + rightSpot === 0){
-                guessObj.feedback = "none of those are correct... at all";
-            } 
-            else {
-                guessObj.feedback = `you got ${rightSpot} numbers in their correct place, and ${included} numbers that are in the code, but not in their correct place`
-            }
-            return guessObj;
-         */
     }
 
     render() {
@@ -114,6 +83,12 @@ class GameBoard extends React.Component {
 }
 
 export default GameBoard
+
+/**
+ * questions for Nick
+ * 1. how can I fix the backend so that going to slash rng returns the random number
+ * 2. how can I use setTimeout to make sure my function runs once per second to generate the code
+ */
 
     // componentDidMount() {
     //   this.setCode();

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 class GuessList extends Component {
 
     renderGuesses(){
-        return this.props.guesses.map(g => <li>your guess: {g.guess} feedback: {g.feedback}</li>)
+        return this.props.guesses.map((g, index)=> <li key={index}>your guess: {g.guess} feedback: {g.feedback}</li>)
     }
 
     render() {
