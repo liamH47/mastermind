@@ -6,7 +6,6 @@ class CodeContainer extends Component {
         console.log('codecontainer props:', this.props)
     }
 
-
     renderSecret(){
         if(this.props.revealCode){
             return this.props.secret.map((number, index) => <li key={index} value={number}>{number}</li>)
@@ -22,7 +21,6 @@ class CodeContainer extends Component {
             <ul className='secret-container'>
                 {this.renderSecret()}
             </ul>
-
         )
     }
 }
