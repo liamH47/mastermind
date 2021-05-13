@@ -30,7 +30,8 @@ class GameBoard extends React.Component {
                 gameStarted: false,
                 options: [0,1,2,3,4,5,6,7],
                 guesses: [],
-                revealCode: false
+                revealCode: false,
+                score: 0
             };
             this.startGame = this.startGame.bind(this)
     }
@@ -67,7 +68,10 @@ class GameBoard extends React.Component {
           if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++;
         }
         if(rightSpot === 4) {
-            this.setState({ revealCode: !this.state.revealCode})
+            this.setState({ 
+                revealCode: !this.state.revealCode,
+                score: this.state.score + 1 + this.state.tries
+            })
             console.log("you won!"); 
         }
         else {
@@ -88,6 +92,7 @@ class GameBoard extends React.Component {
             <div>
                 <header className='app-header'>
                     <h1>Mastermind!</h1>
+                    <h3>Session Score: {this.state.score}</h3>
                 </header>
                 <button onClick={this.startGame}>Start Game</button>
                 <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
