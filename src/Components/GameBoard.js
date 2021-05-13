@@ -2,9 +2,22 @@
 import React from 'react';
 import Form from './Form';
 import GuessList from './GuessList';
+import CodeContainer from './CodeContainer';
 
 /**
+ * plans for today
+ * styling upgrades
+ * 1. create a container to hold the secret code. maybe have a question mark for each number in code
+ *      -this can change to reveal the code when user wins or loses
+ *      -could be a ul with display:flex 
+ * 2. create a function to run when the user wins. could be an animation
+ * 3. create a score that will be displayed
+ *      -scoring system could be one point for winning, plus one point for each remaining guess
+ * 4. change the past guesses section to provide more traditional mastermind feedback, like the peg system
+ *      -maybe just have a fully traditional board
+ * 5. when start game function is working correctly, maybe add morse code sounds for when the secret code is being generated
  * 
+ * now that question marks are shown, make it so that they will show the true code if revealCode is true
 */
 
 class GameBoard extends React.Component {
@@ -16,7 +29,8 @@ class GameBoard extends React.Component {
                 tries: 10,
                 gameStarted: false,
                 options: [0,1,2,3,4,5,6,7],
-                guesses: []
+                guesses: [],
+                revealCode: false
             };
             this.startGame = this.startGame.bind(this)
     }
@@ -50,9 +64,12 @@ class GameBoard extends React.Component {
         }
         for(let i = 0; i < arr1.length; i++){
           if(arr1[i] === arr2[i]) rightSpot++;
-          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
+          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++;
         }
-        if(rightSpot === 4) console.log("you won!"); 
+        if(rightSpot === 4) {
+            this.setState({ revealCode: !this.state.revealCode})
+            console.log("you won!"); 
+        }
         else {
             this.setState({ tries: this.state.tries - 1 });
             guessObj.guess = arr1;
@@ -69,11 +86,19 @@ class GameBoard extends React.Component {
     render() {
         return (
             <div>
-                <h1>Mastermind!</h1>
+                <header className='app-header'>
+                    <h1>Mastermind!</h1>
+                </header>
                 <button onClick={this.startGame}>Start Game</button>
                 <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
                 <div>
-                    <h3>You have {this.state.tries} tries left</h3>
+                    <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
+                    <> {this.state.revealCode ?
+                        <h3>Congratulations, you won!</h3>
+                        : <h3>You have {this.state.tries} tries left</h3>
+                    }
+                    </>
+
                     <h3>Past Guesses:</h3>
                     <GuessList guesses={this.state.guesses}/>
                 </div>
