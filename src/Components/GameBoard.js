@@ -1,26 +1,19 @@
 // import axios from 'axios'
-import React from 'react'
-import Form from './Form'
+import React from 'react';
+import Form from './Form';
+import GuessList from './GuessList';
 
 
 
-// const GameBoard = () => {
-//     const [gameStarted, setGameStarted] = useState(false)
-//     return (
-//         <div>
-//            <h1>Mastermind!</h1> 
-//            <button onClick={() => setGameStarted(!gameStarted)}>Start Game</button>
-//         </div>
-//     )
-// }
 
-// export default GameBoard
 
 /**
  * next plans
  * 1. create inputs for secret code. they should be dropdowns with options of 0-7
  * 2. this should probably be a Select that is it's own component. on submit, it will check whether the user input matches secret code
- * 3.  
+ * 3. work on updating the amount of remaining tries when submit happens, also displaying the number of tries
+ * 4. once tries are updating and displaying, show the details about the guesses
+ * 5. create a past guesses component. every guess will be pushed into an array in state, and then each of those will be mapped into a guess that is an <li>
  
 */
 
@@ -35,7 +28,6 @@ class GameBoard extends React.Component {
                 options: [0,1,2,3,4,5,6,7],
                 currentGuess: []
             };
-            this.submitHandler = this.submitHandler.bind(this)
             this.startGame = this.startGame.bind(this)
     }
 
@@ -50,16 +42,36 @@ class GameBoard extends React.Component {
 
     submitHandler = (obj) => {
         this.setState({ currentGuess: [] })
+        let secret = this.state.secretCode
         let guessArr = [];
         for(let key in obj){
             let plsWork = parseInt(obj[key])
             guessArr.push(plsWork);
         }
-        if(guessArr == this.state.secretCode){
-            console.log('correct!')
-        }      
-        this.setState({ currentGuess: guessArr })
-        console.log(this.state.currentGuess, this.state.secretCode);
+        this.checkGuess(guessArr, secret)
+        console.log(guessArr, secret);
+    }
+
+    checkGuess(arr1, arr2){
+        let included = 0;
+        let rightSpot = 0;
+        for(let i = 0; i < arr1.length; i++){
+            // if(arr1[i] === arr2[i]) rightSpot++
+            // if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
+            if(arr1[i] !==arr2[i]){
+                console.log('nope')
+                this.setState({ tries: this.state.tries - 1})
+                return false;
+            }
+        }
+        console.log('yup!')
+        return true;
+        /**
+         * need to count 
+         * 1. how many values are included but not in the right place
+         * 2. how many are included and idi
+         * }
+         */
     }
 
     render() {
@@ -68,6 +80,10 @@ class GameBoard extends React.Component {
                 <h1>Mastermind!</h1>
                 <button onClick={this.startGame}>Start Game</button>
                 <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
+                <div>
+                    <h3>You have {this.state.tries} tries left</h3>
+                    <h3>Past Guesses:</h3>
+                </div>
             </div>
         )
     }
