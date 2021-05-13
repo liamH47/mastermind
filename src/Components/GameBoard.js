@@ -2,6 +2,7 @@
 import React from 'react';
 import Form from './Form';
 import GuessList from './GuessList';
+import CodeContainer from './CodeContainer';
 
 /**
  * 
@@ -16,7 +17,9 @@ class GameBoard extends React.Component {
                 tries: 10,
                 gameStarted: false,
                 options: [0,1,2,3,4,5,6,7],
-                guesses: []
+                guesses: [],
+                revealCode: false,
+                score: 0
             };
             this.startGame = this.startGame.bind(this)
     }
@@ -52,7 +55,13 @@ class GameBoard extends React.Component {
           if(arr1[i] === arr2[i]) rightSpot++;
           if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++
         }
-        if(rightSpot === 4) console.log("you won!"); 
+        if(rightSpot === 4) {
+            this.setState({ 
+                revealCode: !this.state.revealCode,
+                score: this.state.score + 1 + this.state.tries
+            })        
+            console.log("you won!"); 
+        }
         else {
             this.setState({ tries: this.state.tries - 1 });
             guessObj.guess = arr1;
@@ -70,10 +79,16 @@ class GameBoard extends React.Component {
         return (
             <div>
                 <h1>Mastermind!</h1>
+                <h3>Session Score: {this.state.score}</h3>
                 <button onClick={this.startGame}>Start Game</button>
                 <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
                 <div>
-                    <h3>You have {this.state.tries} tries left</h3>
+                    <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
+                    <> {this.state.revealCode ?
+                        <h3>Congratulations, you won!</h3>
+                        : <h3>You have {this.state.tries} tries left</h3>
+                    }
+                    </>
                     <h3>Past Guesses:</h3>
                     <GuessList guesses={this.state.guesses}/>
                 </div>
@@ -84,11 +99,7 @@ class GameBoard extends React.Component {
 
 export default GameBoard
 
-/**
- * questions for Nick
- * 1. how can I fix the backend so that going to slash rng returns the random number
- * 2. how can I use setTimeout to make sure my function runs once per second to generate the code
- */
+
 
     // componentDidMount() {
     //   this.setCode();
