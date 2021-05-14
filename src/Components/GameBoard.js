@@ -34,7 +34,7 @@ class GameBoard extends React.Component {
     };
 
     getCode = () => {
-         return axios.get('http://localhost:3001/rng')
+        return axios.get('http://localhost:3001/rng')
         .then(response => response.data)
         // .then(data => this.setState({ secretCode: data }))
 
@@ -48,6 +48,7 @@ class GameBoard extends React.Component {
                  secretCode: code
             })      
         })
+        console.log(this.state)
     }
 
     submitHandler = (obj) => {
