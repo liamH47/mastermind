@@ -3,22 +3,15 @@ import React from 'react';
 import Form from './Form';
 import GuessList from './GuessList';
 import CodeContainer from './CodeContainer';
+import TestBoard from './TestBoard';
 
 /**
- * plans for today
- * styling upgrades
- * 1. create a container to hold the secret code. maybe have a question mark for each number in code
- *      -this can change to reveal the code when user wins or loses
- *      -could be a ul with display:flex 
- * 2. create a function to run when the user wins. could be an animation
- * 3. create a score that will be displayed
- *      -scoring system could be one point for winning, plus one point for each remaining guess
- * 4. change the past guesses section to provide more traditional mastermind feedback, like the peg system
- *      -maybe just have a fully traditional board
- * 5. when start game function is working correctly, maybe add morse code sounds for when the secret code is being generated
- * 
- * now that question marks are shown, make it so that they will show the true code if revealCode is true
- * set static initial state
+ * plans for today + this weekend
+ * create a board that looks more like a traditional mastermind board
+ * work on the start game function. eventually, there will be a form that allows you to choose the settings for your game.
+ *      for now, the following things are priorities:
+ *          set static initial state that will be updated when start game is pressed, and can be reset when the game ends or player wants to restart
+ *          make start game button only visible when a game is not ongoing
 */
 
 class GameBoard extends React.Component {
@@ -102,7 +95,7 @@ class GameBoard extends React.Component {
 
     render() {
         return (
-            <div>
+            <section className='game-container'>
                 <h1>Mastermind!</h1>
                 <h3>Session Score: {this.state.score}</h3>
                 <button onClick={this.startGame}>Start Game</button>
@@ -114,47 +107,15 @@ class GameBoard extends React.Component {
                         : <h3>You have {this.state.tries} tries left</h3>
                     }
                     </>
+                </div>
+                    <TestBoard />
                     <h3>Past Guesses:</h3>
                     <GuessList guesses={this.state.guesses}/>
-                </div>
-            </div>
+
+            </section>
         )
     }
 }
 
 export default GameBoard
 
-
-
-    // componentDidMount() {
-    //   this.setCode();
-    //   axios.get('https://csrng.net/csrng/csrng.php?min=0&max=7')
-    //     .then(res => {
-    //         // console.log(res.data[0].random)
-    //         const number = res.data[0].random;
-    //         // console.log(number)
-    //         this.setState({...this.state.numbers, number})
-    //     });
-    //   console.log(this.state);
-    // }
-
-    // setCode(){
-    //     let nums = [];
-    //     let count = 0;
-    //     for(count; count < 4; count++){
-    //       setInterval(function () {
-
-    //           axios.get('https://csrng.net/csrng/csrng.php?min=0&max=7')
-    //           .then(res => {
-    //               // console.log(res.data[0].random)
-    //               const number = res.data[0].random;
-    //               // console.log(number)
-    //               nums.push(number)
-    //             });
-    //           console.log(nums)
-    //         }, 1000)
-    //     }
-    //     clearInterval();
-    //     console.log(nums)
-    //     this.setState({ numbers: nums });
-    // }
