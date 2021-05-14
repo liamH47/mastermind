@@ -1,4 +1,4 @@
-// import axios from 'axios'
+import axios from 'axios'
 import React from 'react';
 import Form from './Form';
 import GuessList from './GuessList';
@@ -18,32 +18,37 @@ import CodeContainer from './CodeContainer';
  * 5. when start game function is working correctly, maybe add morse code sounds for when the secret code is being generated
  * 
  * now that question marks are shown, make it so that they will show the true code if revealCode is true
+ * set static initial state
 */
 
 class GameBoard extends React.Component {
 
-    constructor(props){
-        super(props)
-            this.state = {
-                secretCode: [ 1, 2, 3, 4 ],
-                tries: 10,
-                gameStarted: false,
-                options: [0,1,2,3,4,5,6,7],
-                guesses: [],
-                revealCode: false,
-                score: 0
-            };
-            this.startGame = this.startGame.bind(this)
+    state = {
+        secretCode: [],
+        tries: 10,
+        gameStarted: false,
+        options: [0,1,2,3,4,5,6,7],
+        guesses: [],
+        revealCode: false,
+        score: 0
+    };
+
+    getCode = () => {
+         return axios.get('http://localhost:3001/rng')
+        .then(response => response.data)
+        // .then(data => this.setState({ secretCode: data }))
+
     }
-
-
-    startGame(){
-        this.setState({ gameStarted: !this.state.gameStarted })
+    
+    startGame = () => {
+        this.getCode()
+        .then((code) => {
+            this.setState({
+                 gameStarted: !this.state.gameStarted,
+                 secretCode: code
+            })      
+        })
     }
-
-    // changeHandler = (e) => {
-    //     this.setState({ [e.target.name]: e.target.value })
-    // }
 
     submitHandler = (obj) => {
         let secret = this.state.secretCode
