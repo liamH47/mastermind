@@ -40,6 +40,10 @@ body {
 
 }
 
+.guess-square {
+  border: 1px solid blueviolet;
+}
+
 .board-container {
   width: 40vw;
   height: 80vw;
@@ -55,6 +59,7 @@ body {
   background: bisque;
   margin: 0;
   padding: 0;
+  grid-template-columns: repeat(4, 1fr);
 
 }
 

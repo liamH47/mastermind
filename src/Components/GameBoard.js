@@ -56,40 +56,37 @@ class GameBoard extends React.Component {
     }
 
     checkGuess(arr1, arr2){
-        let included = 0;
-        let rightSpot = 0;
+        // let included = 0;
+        // let rightSpot = 0;
         let guessObj = {
             guess: [],
-            feedback: ''
+            included: 0,
+            rightSpot: 0
         }
         for(let i = 0; i < arr1.length; i++){
-          if(arr1[i] === arr2[i]) rightSpot++;
-          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) included++;
+          if(arr1[i] === arr2[i]) guessObj.rightSpot++;
+          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) guessObj.included++;
         }
-        if(rightSpot === 4) {
+        if(guessObj.rightSpot === 4) {
             this.setState({ 
                 revealCode: !this.state.revealCode,
                 score: this.state.score + 1 + this.state.tries
             })
             console.log("you won!"); 
         }
-        if(rightSpot === 4) {
-            this.setState({ 
-                revealCode: !this.state.revealCode,
-                score: this.state.score + 1 + this.state.tries
-            })        
-            console.log("you won!"); 
-        }
         else {
-            this.setState({ tries: this.state.tries - 1 });
+            // this.setState({ tries: this.state.tries - 1 });
             guessObj.guess = arr1;
-            if(included + rightSpot === 0){
-                guessObj.feedback = "none of those are correct... at all";
-            } 
-            else {
-                guessObj.feedback = `you got ${rightSpot} numbers in their correct place, and ${included} numbers that are in the code, but not in their correct place`; 
-            }
-            this.setState({ guesses: [...this.state.guesses, guessObj]});
+            // if(included + rightSpot === 0){
+            //     guessObj.feedback = "none of those are correct... at all";
+            // } 
+            // else {
+            //     guessObj.feedback = `you got ${rightSpot} numbers in their correct place, and ${included} numbers that are in the code, but not in their correct place`; 
+            // }
+            this.setState({ 
+                guesses: [...this.state.guesses, guessObj],
+                tries: this.state.tries - 1
+            });
         }
     }
 
@@ -108,7 +105,7 @@ class GameBoard extends React.Component {
                     }
                     </>
                 </div>
-                    <TestBoard />
+                    <TestBoard guesses={this.state.guesses}/>
                     <h3>Past Guesses:</h3>
                     <GuessList guesses={this.state.guesses}/>
 
