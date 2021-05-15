@@ -1,21 +1,15 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react';
+
+//maybe need to pass index as a string so that it doesnt get evaluated as false
 
 const Guess = ({guesses, index}) => {
-
-    useEffect(() => {
-        console.log("guess useeffect", guesses);
-    }, [])
-
-    // const renderGuess = (props) => {
-    //     if(props.guesses[props.index]){
-    //         return <p>{props.guesses[props.index]}</p>
-    //     }
-
-    // }
+    // useEffect(() => {
+    //     console.log("guess useeffect", index);
+    // }, [])
 
     return (
         <div className='guess-square'>
-            <p>{guesses[index] || "?"}</p>
+            <p>{index <= guesses.length - 1 ? parseInt(guesses[index]) : "?"}</p>
         </div>
     )
 }
