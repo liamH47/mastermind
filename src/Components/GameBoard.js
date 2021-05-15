@@ -56,8 +56,7 @@ class GameBoard extends React.Component {
     }
 
     checkGuess(arr1, arr2){
-        // let included = 0;
-        // let rightSpot = 0;
+        // need to fix logic that sets included and rightspot, potentially add 'wrong' field to obj
         let guessObj = {
             guess: [],
             included: 0,
@@ -67,6 +66,7 @@ class GameBoard extends React.Component {
           if(arr1[i] === arr2[i]) guessObj.rightSpot++;
           if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) guessObj.included++;
         }
+        // guessObj.included = guessObj.included - guessObj.rightSpot;
         if(guessObj.rightSpot === 4) {
             this.setState({ 
                 revealCode: !this.state.revealCode,

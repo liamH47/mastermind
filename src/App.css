@@ -44,6 +44,16 @@ body {
   border: 1px solid blueviolet;
 }
 
+.feedback-square {
+  border: 1px solid red;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.single-feedback {
+  border: 1px solid blue;
+}
+
 .board-container {
   width: 40vw;
   height: 80vw;
