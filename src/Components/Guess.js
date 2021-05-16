@@ -9,10 +9,21 @@ const Guess = ({guesses, index}) => {
 
     return (
         <div className='guess-square'>
-            <p>{index <= guesses.length - 1 ? parseInt(guesses[index]) : "?"}</p>
+            {index <= guesses.length - 1 ? 
+                <img src={`/img/chars/${guesses[index]}.jpg`} alt={guesses[index]} />
+                : <img src='/img/mystery/block.jpg' alt='?'/>
+            }
         </div>
     )
 }
 
 export default Guess
 
+// return (
+//     <div className='guess-square'>
+//         {index <= guesses.length - 1 ? 
+//             parseInt(guesses[index]) 
+//             : "?"
+//         }
+//     </div>
+// )

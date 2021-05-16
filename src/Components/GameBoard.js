@@ -12,7 +12,8 @@ import StartForm from './StartForm';
  * work on the start game function. eventually, there will be a form that allows you to choose the settings for your game.
  *      for now, the following things are priorities:
  *          set static initial state that will be updated when start game is pressed, and can be reset when the game ends or player wants to restart
- *          make start game button only visible when a game is not ongoing
+ *          make it so that when the player wins they have the option to start a new game
+ *          also winning guess needs to show
 */
 
 class GameBoard extends React.Component {
@@ -129,10 +130,7 @@ class GameBoard extends React.Component {
                     </>
                 </div>
                     <TestBoard guesses={this.state.guesses}/>
-                    <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
-                    {/* <h3>Past Guesses:</h3>
-                    <GuessList guesses={this.state.guesses}/> */}
-                
+                    <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>                
                 </>
                     : <StartForm startGame={this.startGame}/>
                 }
@@ -140,8 +138,15 @@ class GameBoard extends React.Component {
             </section>
         )
     }
-//need a new form component to show instead of the game board until game is started
-//then write a ternary to set conditional rendering based on state
 };
 export default GameBoard
+
+/**
+ * css to work on
+ * 1. make images fit perfectly in square
+ * 2. get skeleton of start game form fleshed out for when i add rules
+ * 3. adjust size and positioning of current guess and guess form so they appear next to board
+ * 4. create a nicer header
+ * 5. maybe change everything to some kind of mario font
+ */
 

@@ -8,9 +8,9 @@ class CodeContainer extends Component {
 
     renderSecret(){
         if(this.props.revealCode){
-            return this.props.secret.map((number, index) => <li key={index} value={number}>{number}</li>)
+            return this.props.secret.map((number, index) => <img key={index} alt={number} src={`/img/chars/${number}.jpg`}></img>)
         } else {
-            return this.props.secret.map((number, index) => <li key={index} value={number}>?</li>)
+            return this.props.secret.map((number, index) => <img key={index} alt={number} src="/img/mystery/block.jpg"></img>)
         }
     //    if(!this.props.revealCode){
     //    }
@@ -18,9 +18,9 @@ class CodeContainer extends Component {
 
     render() {
         return (
-            <ul className='secret-container'>
+            <div className='secret-container'>
                 {this.renderSecret()}
-            </ul>
+            </div>
         )
     }
 }

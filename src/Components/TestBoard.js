@@ -4,11 +4,6 @@ import FeedBack from './FeedBack';
 
 class TestBoard extends Component {
 
-    /**
-     * next steps
-     * rather than passing the guess array that has every single entry, i think i should make an array of guesses that is
-        made up of literally just the numbers. push all of those arrays into another flat array
-     */
     state = {
         guessArray: [],
         feedArray: []
@@ -47,16 +42,6 @@ class TestBoard extends Component {
     }
 
     setFeedBack = () => {
-        // let newArr = [];
-        // let guesses = this.props.guesses
-        // for(let i = 0; i < guesses.length; i++){
-        //     let obj = {
-        //         included: guesses[i].included,
-        //         rightSpot: guesses[i].rightSpot
-        //     };
-        //     newArr.push(obj);
-        // }
-        // this.setState({ feedArray: newArr });
         let newArr2 = [];
         let guesses = this.props.guesses;
         for(let i = 0; i < guesses.length; i++){
@@ -64,10 +49,6 @@ class TestBoard extends Component {
         }
         this.setState({ feedArray: newArr2 });
     }
-    /**
-     * need to do something similar to set guesses. each index in the array here should be an object
-     * 
-     */
 
     renderFeedBack = () => {
         let feedback = [];
