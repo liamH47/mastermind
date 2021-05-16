@@ -29,9 +29,7 @@ class GameBoard extends React.Component {
     getCode = () => {
         return axios.get('http://localhost:3001/rng')
         .then(response => response.data)
-        // .then(data => this.setState({ secretCode: data }))
-
-    }
+    };
     
     startGame = () => {
         this.getCode()
@@ -55,41 +53,64 @@ class GameBoard extends React.Component {
         console.log(guessArr, secret);
     }
 
-    checkGuess(arr1, arr2){
-        // need to fix logic that sets included and rightspot, potentially add 'wrong' field to obj
+    // checkGuess(arr1, arr2){
+    //     let guessObj = {
+    //         guess: [],
+    //         included: 0,
+    //         rightSpot: 0
+    //     }
+    //     for(let i = 0; i < arr1.length; i++){
+    //       if(arr1[i] === arr2[i]) guessObj.rightSpot++;
+    //       if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) guessObj.included++;
+    //     }
+        // if(guessObj.rightSpot === 4) {
+        //     this.setState({ 
+        //         revealCode: !this.state.revealCode,
+        //         score: this.state.score + 1 + this.state.tries
+        //     })
+        //     console.log("you won!"); 
+    //     }
+    //     else {
+    //         guessObj.guess = arr1;
+            // this.setState({ 
+            //     guesses: [...this.state.guesses, guessObj],
+            //     tries: this.state.tries - 1
+            // });
+    //     }
+    // }
+    checkGuess = (arr1, arr2) => {
         let guessObj = {
             guess: [],
-            included: 0,
-            rightSpot: 0
+            feedBack: []
         }
+        let rightSpot = 0;
+        guessObj.guess = arr1;
         for(let i = 0; i < arr1.length; i++){
-          if(arr1[i] === arr2[i]) guessObj.rightSpot++;
-          if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) guessObj.included++;
+          if(arr1[i] === arr2[i]){
+            rightSpot++;
+            guessObj.feedBack.push("rightSpot");
+            if(rightSpot === 4) {
+               console.log("you won!");
+               return this.setState({ 
+                    revealCode: !this.state.revealCode,
+                    score: this.state.score + 1 + this.state.tries
+                })
+            }
+            //this else if is not quite right. 0 is messing it up.
+          } else if (!arr2.includes(arr1[i])){
+            guessObj.feedBack.push("wrong");
+          } else {
+            guessObj.feedBack.push("included");
+          }
+        
         }
-        // guessObj.included = guessObj.included - guessObj.rightSpot;
-        if(guessObj.rightSpot === 4) {
-            this.setState({ 
-                revealCode: !this.state.revealCode,
-                score: this.state.score + 1 + this.state.tries
-            })
-            console.log("you won!"); 
-        }
-        else {
-            // this.setState({ tries: this.state.tries - 1 });
-            guessObj.guess = arr1;
-            // if(included + rightSpot === 0){
-            //     guessObj.feedback = "none of those are correct... at all";
-            // } 
-            // else {
-            //     guessObj.feedback = `you got ${rightSpot} numbers in their correct place, and ${included} numbers that are in the code, but not in their correct place`; 
-            // }
-            this.setState({ 
-                guesses: [...this.state.guesses, guessObj],
-                tries: this.state.tries - 1
-            });
-        }
+        this.setState({ 
+            guesses: [...this.state.guesses, guessObj],
+            tries: this.state.tries - 1
+        });
+        
+    
     }
-
     render() {
         return (
             <section className='game-container'>
@@ -112,7 +133,7 @@ class GameBoard extends React.Component {
             </section>
         )
     }
-}
 
+};
 export default GameBoard
 

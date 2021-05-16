@@ -30,23 +30,23 @@ import TinySquare from './TinySquare'
 
 class FeedBack extends Component {
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log("in feedback CDU:", this.props.feedBack[this.props.index])
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log("in feedback CDU:", this.props.feedBack[this.props.index])
+    // }
     
 
-    renderGrid = () => {
-        let items = [];
-        for(let i = 0; i < 4; i++){
-            items.push(i);
-        }
-        return items.map((el, index) => <TinySquare key={index}/>)
-    }
+    // renderGrid = () => {
+    //     let items = [];
+    //     for(let i = 0; i < 4; i++){
+    //         items.push(i);
+    //     }
+    //     return items.map((el, index) => <TinySquare key={index}/>)
+    // }
 
     render() {
         return (
             <div className='feedback-square'>
-                {this.renderGrid()}
+                {this.props.feedBack ? <img src={`/img/feedback/${this.props.feedBack}.png`}></img> : <></>}
             </div>
         )
     }
