@@ -50,12 +50,24 @@ body {
 
 }
 
+.secret-container img {
+  margin: .25em;
+  max-width: 20%;
+}
+
 .current-guess-container{
   border: 1px solid limegreen
 }
 
 .guess-square {
   border: 1px solid blueviolet;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.guess-square img {
+  max-width: 100%;
+
 }
 
 .feedback-square {
