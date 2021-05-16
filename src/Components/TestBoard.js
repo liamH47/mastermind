@@ -47,16 +47,22 @@ class TestBoard extends Component {
     }
 
     setFeedBack = () => {
-        let newArr = [];
-        let guesses = this.props.guesses
+        // let newArr = [];
+        // let guesses = this.props.guesses
+        // for(let i = 0; i < guesses.length; i++){
+        //     let obj = {
+        //         included: guesses[i].included,
+        //         rightSpot: guesses[i].rightSpot
+        //     };
+        //     newArr.push(obj);
+        // }
+        // this.setState({ feedArray: newArr });
+        let newArr2 = [];
+        let guesses = this.props.guesses;
         for(let i = 0; i < guesses.length; i++){
-            let obj = {
-                included: guesses[i].included,
-                rightSpot: guesses[i].rightSpot
-            };
-            newArr.push(obj);
+            Array.prototype.push.apply(newArr2, guesses[i].feedBack);
         }
-        this.setState({ feedArray: newArr });
+        this.setState({ feedArray: newArr2 });
     }
     /**
      * need to do something similar to set guesses. each index in the array here should be an object
@@ -66,11 +72,11 @@ class TestBoard extends Component {
     renderFeedBack = () => {
         let feedback = [];
         let obj = {};
-        for(let i = 0; i < 10; i++){
+        for(let i = 0; i < 40; i++){
             feedback.push(i)
         }
 
-        return feedback.map((el, idx) => <FeedBack feedBack={this.state.feedArray} index={idx} text={el} key={idx}  />)
+        return feedback.map((el, idx) => <FeedBack feedBack={this.state.feedArray[idx]} index={idx} text={el} key={idx}  />)
     }
 //pass feedback the number of correct, number of rightspot. it will render that many of
 // those, and then 4 - the total(right + rightspot) empty ones 

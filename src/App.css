@@ -46,8 +46,18 @@ body {
 
 .feedback-square {
   border: 1px solid red;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
+  /* display: grid; */
+  /* grid-template-columns: repeat(2, 1fr); */
+}
+
+.feedback-square img {
+  flex-shrink: 0;
+  width: 100%!important;
+  height: 100%!important;
 }
 
 .single-feedback {
@@ -81,6 +91,7 @@ body {
   background: lightgreen; 
   margin: 0;
   padding: 0;
+  grid-template-columns: repeat(2, 1fr);
 }
 .secret-container li {
   margin: .25em;
