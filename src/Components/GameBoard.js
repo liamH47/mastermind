@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React from 'react';
-import Form from './Form';
+import GuessForm from './GuessForm';
 import GuessList from './GuessList';
 import CodeContainer from './CodeContainer';
 import TestBoard from './TestBoard';
+import StartForm from './StartForm';
 
 /**
  * plans for today + this weekend
@@ -31,7 +32,8 @@ class GameBoard extends React.Component {
         .then(response => response.data)
     };
     
-    startGame = () => {
+    startGame = (e) => {
+        e.preventDefault();
         this.getCode()
         .then((code) => {
             this.setState({
@@ -41,16 +43,16 @@ class GameBoard extends React.Component {
         })
         console.log(this.state)
     }
-
-    submitHandler = (obj) => {
-        let secret = this.state.secretCode
-        let guessArr = [];
-        for(let key in obj){
-            let plsWork = parseInt(obj[key])
-            guessArr.push(plsWork);
-        }
-        this.checkGuess(guessArr, secret)
-        console.log(guessArr, secret);
+    //make the form pass up an array here instead, so that checkguess can be run without loop
+    submitHandler = (arr) => {
+        let secret = this.state.secretCode;
+        // let guessArr = [];
+        // for(let key in obj){
+        //     let plsWork = parseInt(obj[key])
+        //     guessArr.push(plsWork);
+        // }
+        this.checkGuess(arr, secret)
+        console.log(arr, secret);
     }
 
     // checkGuess(arr1, arr2){
@@ -116,8 +118,8 @@ class GameBoard extends React.Component {
             <section className='game-container'>
                 <h1>Mastermind!</h1>
                 <h3>Session Score: {this.state.score}</h3>
-                <button onClick={this.startGame}>Start Game</button>
-                <Form options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
+                {this.state.gameStarted ?
+                <>
                 <div>
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
                     <> {this.state.revealCode ?
@@ -127,13 +129,19 @@ class GameBoard extends React.Component {
                     </>
                 </div>
                     <TestBoard guesses={this.state.guesses}/>
-                    <h3>Past Guesses:</h3>
-                    <GuessList guesses={this.state.guesses}/>
+                    <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>
+                    {/* <h3>Past Guesses:</h3>
+                    <GuessList guesses={this.state.guesses}/> */}
+                
+                </>
+                    : <StartForm startGame={this.startGame}/>
+                }
 
             </section>
         )
     }
-
+//need a new form component to show instead of the game board until game is started
+//then write a ternary to set conditional rendering based on state
 };
 export default GameBoard
 
