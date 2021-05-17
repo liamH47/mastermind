@@ -44,43 +44,14 @@ class GameBoard extends React.Component {
         })
         console.log(this.state)
     }
-    //make the form pass up an array here instead, so that checkguess can be run without loop
+
     submitHandler = (arr) => {
         let secret = this.state.secretCode;
-        // let guessArr = [];
-        // for(let key in obj){
-        //     let plsWork = parseInt(obj[key])
-        //     guessArr.push(plsWork);
-        // }
         this.checkGuess(arr, secret)
         console.log(arr, secret);
     }
 
-    // checkGuess(arr1, arr2){
-    //     let guessObj = {
-    //         guess: [],
-    //         included: 0,
-    //         rightSpot: 0
-    //     }
-    //     for(let i = 0; i < arr1.length; i++){
-    //       if(arr1[i] === arr2[i]) guessObj.rightSpot++;
-    //       if(arr2.includes(arr1[i]) && arr1[i] !== arr2[i]) guessObj.included++;
-    //     }
-        // if(guessObj.rightSpot === 4) {
-        //     this.setState({ 
-        //         revealCode: !this.state.revealCode,
-        //         score: this.state.score + 1 + this.state.tries
-        //     })
-        //     console.log("you won!"); 
-    //     }
-    //     else {
-    //         guessObj.guess = arr1;
-            // this.setState({ 
-            //     guesses: [...this.state.guesses, guessObj],
-            //     tries: this.state.tries - 1
-            // });
-    //     }
-    // }
+
     checkGuess = (arr1, arr2) => {
         let guessObj = {
             guess: [],
@@ -129,8 +100,13 @@ class GameBoard extends React.Component {
                     }
                     </>
                 </div>
-                    <TestBoard guesses={this.state.guesses}/>
-                    <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>                
+                    <TestBoard 
+                        options={this.state.options} 
+                        guesses={this.state.guesses}
+                        changeHandler={this.changeHandler}
+                        submitHandler={this.submitHandler}
+                    />
+                    {/* <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>                 */}
                 </>
                     : <StartForm startGame={this.startGame}/>
                 }

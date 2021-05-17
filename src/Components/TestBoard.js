@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Guess from './Guess';
 import FeedBack from './FeedBack';
+import GuessForm from './GuessForm';
 
 class TestBoard extends Component {
 
@@ -63,14 +64,22 @@ class TestBoard extends Component {
 // those, and then 4 - the total(right + rightspot) empty ones 
 //will need images for each thing (star, coin, x)
     render() {
+        const { options, guesses, submitHandler } = this.props;
         return (
-            <section className='board-container'>
-                <div className='guesses'>
-                    {this.renderGuesses()}
+            <section className='current-game'>
+                <div className='board-container'>
+                    <div className='guesses'>
+                        {this.renderGuesses()}
+                    </div>
+                    <div className='feedback'>
+                        {this.renderFeedBack()}
+                    </div>
                 </div>
-                <div className='feedback'>
-                    {this.renderFeedBack()}
-                </div>
+                <GuessForm 
+                    options={options} 
+                    guesses={guesses}
+                    submitHandler={submitHandler}
+                />
             </section>
         )
     }
