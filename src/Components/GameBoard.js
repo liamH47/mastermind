@@ -8,12 +8,18 @@ import StartForm from './StartForm';
 
 /**
  * plans for today + this weekend
- * create a board that looks more like a traditional mastermind board
  * work on the start game function. eventually, there will be a form that allows you to choose the settings for your game.
  *      for now, the following things are priorities:
  *          set static initial state that will be updated when start game is pressed, and can be reset when the game ends or player wants to restart
  *          make it so that when the player wins they have the option to start a new game
  *          also winning guess needs to show
+ * adjust size of secret code mystery boxes
+ * fix feedback logic
+ * fix aesthetics of current guess container + guess form
+ * add background
+ * start adding game settings. probably timer first
+ * sort guess arrays so that feedback does not give away order
+ *  ^ this could tie into settings. could have an easier setting where the hints are in order
 */
 
 class GameBoard extends React.Component {
@@ -65,9 +71,11 @@ class GameBoard extends React.Component {
             guessObj.feedBack.push("rightSpot");
             if(rightSpot === 4) {
                console.log("you won!");
-               return this.setState({ 
+               return this.setState({
+                    guesses: [...this.state.guesses, guessObj],
                     revealCode: !this.state.revealCode,
-                    score: this.state.score + 1 + this.state.tries
+                    score: this.state.score + 1 + this.state.tries,
+                    tries: this.state.tries - 1
                 })
             }
             //this else if is not quite right. 0 is messing it up.

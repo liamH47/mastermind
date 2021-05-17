@@ -39,14 +39,14 @@ class GuessForm extends Component {
     renderCurrent = () => {
         const { guessArray } = this.state;
         if(guessArray.length) {
-            return guessArray.map(num => 
-                <div>
+            return guessArray.map(num =>             
                     <img src={`/img/chars/${num}.jpg`} value={num} alt={num}/>
-                </div>)
+                )
         }
     }
 
     render() {
+        const { guessArray } = this.state;
         return (
             <div className='form-container'>
                 <h3>Current Guess</h3>
@@ -56,8 +56,11 @@ class GuessForm extends Component {
                 <div className='character-buttons'>
                     {this.renderButtons()}
                 </div>
-                <button onClick={this.resetGuess}>Reset</button>
-                <button onClick={this.localSubHandler}>Submit</button>
+                <div className='button-container'>
+                    <h3>Options</h3>
+                    <button  onClick={this.resetGuess}>Reset</button>
+                    <button disabled={guessArray.length !== 4} onClick={this.localSubHandler}>Submit</button>
+                </div>
             </div>
         )
     }

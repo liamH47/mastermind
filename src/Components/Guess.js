@@ -15,7 +15,7 @@ const Guess = ({guesses, index}) => {
                 }}>
                 </div>
             :   <div style={{
-                    background: `url(/img/chars/${guesses[index]}.jpg) center/90% no-repeat`
+                    background: `url(/img/mystery/block.jpg) center/90% no-repeat`
                 }}>
                 </div>
             }
