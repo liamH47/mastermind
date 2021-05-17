@@ -10,8 +10,14 @@ const Guess = ({guesses, index}) => {
     return (
         <div className='guess-square'>
             {index <= guesses.length - 1 ? 
-                <img src={`/img/chars/${guesses[index]}.jpg`} alt={guesses[index]} />
-                : <img src='/img/mystery/block.jpg' alt='?'/>
+                <div style={{
+                    background: `url(/img/chars/${guesses[index]}.jpg) center/90% no-repeat`
+                }}>
+                </div>
+            :   <div style={{
+                    background: `url(/img/chars/${guesses[index]}.jpg) center/90% no-repeat`
+                }}>
+                </div>
             }
         </div>
     )
@@ -27,3 +33,6 @@ export default Guess
 //         }
 //     </div>
 // )
+
+{/* <img src={`/img/chars/${guesses[index]}.jpg`} alt={guesses[index]} />
+: <img src='/img/mystery/block.jpg' alt='?'/> */}
