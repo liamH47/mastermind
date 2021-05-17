@@ -4,11 +4,12 @@ import GameBoard from './Components/GameBoard';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <GameBoard />
-      {/* <TestBoard /> */}
     </div>
   );
 }
 
 export default App;
+
+// style={{ backgroundImage: 'url(/img/background/mario.jpg)'}}
