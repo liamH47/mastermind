@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
-
-//maybe need to pass index as a string so that it doesnt get evaluated as false
+import React from 'react';
 
 const Guess = ({guesses, index}) => {
-    // useEffect(() => {
-    //     console.log("guess useeffect", index);
-    // }, [])
 
     return (
         <div className='guess-square'>
@@ -24,15 +19,3 @@ const Guess = ({guesses, index}) => {
 }
 
 export default Guess
-
-// return (
-//     <div className='guess-square'>
-//         {index <= guesses.length - 1 ? 
-//             parseInt(guesses[index]) 
-//             : "?"
-//         }
-//     </div>
-// )
-
-{/* <img src={`/img/chars/${guesses[index]}.jpg`} alt={guesses[index]} />
-: <img src='/img/mystery/block.jpg' alt='?'/> */}
