@@ -121,7 +121,10 @@ class GameBoard extends React.Component {
                 {this.state.gameStarted ?
                 <>
                 <div>
-                    <Timer outOfTime={this.outOfTime} count={30} />
+                    {this.state.timer ?
+                    <Timer outOfTime={this.outOfTime} count={5} />
+                    : <> </>
+                    }
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
                     <> {this.state.revealCode ?
                         <h3>Congratulations, you won!</h3>

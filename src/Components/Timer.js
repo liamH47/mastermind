@@ -8,11 +8,12 @@ class Timer extends Component {
 
     componentDidMount() {
         this.interval = setInterval(() => {
+            if(!this.state.count) {
+                this.props.outOfTime();
+                this.setState({ count: this.props.count})
+            }
             this.setState({ count: this.state.count - 1})
         }, 1000)
-        if(!this.state.count) {
-            this.props.outOfTime();
-        }
     }
     
 
