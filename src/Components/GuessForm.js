@@ -52,7 +52,7 @@ class GuessForm extends Component {
                 <div className='button-container'>
                     <h3>Options</h3>
                     <button  onClick={this.resetGuess}>Reset</button>
-                    <button disabled={guessArray.length !== 4} onClick={this.localSubHandler}>Submit</button>
+                    <button disabled={guessArray.length !== 4} onClick={this.localSubHandler}>Check</button>
                 </div>
             </div>
         )

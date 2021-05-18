@@ -1,7 +1,5 @@
 import axios from 'axios'
 import React from 'react';
-import GuessForm from './GuessForm';
-import GuessList from './GuessList';
 import CodeContainer from './CodeContainer';
 import TestBoard from './TestBoard';
 import StartForm from './StartForm';
@@ -98,9 +96,10 @@ class GameBoard extends React.Component {
     }
     checkGuess = (userGuess, code) => {
         let guessObj = {
-            guess: [],
+            guess: userGuess,
             feedBack: []
         }
+        let rightSpot = 0;
         guessObj.guess = userGuess;
         if(userGuess === code) {
             guessObj.feedBack = ["rightSpot", "rightSpot", "rightSpot", "rightSpot"]
@@ -118,8 +117,10 @@ class GameBoard extends React.Component {
                 guessObj.feedBack.push("rightSpot");
                 guessCopy[i] = -1;
                 codeCopy[i] = -1;
+                rightSpot++;
             }
         }
+        //maybe the fix is to do a .includes on the code and then set that = -1
         for(let i = 0; i < guessCopy.length; i++){
             let notIncluded = true;
             if(codeCopy[i] === -1) continue;

@@ -24,6 +24,7 @@ button {
 
 .game-container {
   width: 100%;
+  max-width: 940px;
 }
 #root {
   display: flex;
@@ -85,12 +86,13 @@ body {
 
 .character-buttons {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
   margin-top: 2em;
 }
 
-.character-buttons button {
-  max-width: 100%;
+.character-buttons img {
+  width: 100%;
+  height: auto;
 }
 
 .button-container{
@@ -143,6 +145,10 @@ body {
   border: 5px solid black;
   margin: 0 auto;
   background: lightskyblue;
+  min-height: 520px;
+  min-width: 275px;
+  max-height: 780px;
+  max-width: 392px;
 }
 
 .form-container {
@@ -150,9 +156,13 @@ body {
   height: 80vw;
   border: 5px solid black;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  background: rgb(98, 204, 98)
+  /* display: flex;
+  flex-direction: column; */
+  background: rgb(98, 204, 98);
+  min-width: 200px;
+  min-height: 520px;
+  max-height: 400px;
+  max-width: 392px;
 }
 
 .form-container h3 {

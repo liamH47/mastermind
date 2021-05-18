@@ -25,9 +25,11 @@ class GuessButton extends Component {
     render() {
         const { source, isDisabled } = this.props;
         return (
-            <button disabled={isDisabled >= 4} onClick={this.localClickHandler} name={`${source}`}>
-                <img src={`/img/chars/${source}.jpg`}  alt={source}></img>
-            </button>
+            <div>
+                <button disabled={isDisabled >= 4} onClick={this.localClickHandler} name={`${source}`}>
+                    <img src={`/img/chars/${source}.jpg`}  alt={source}></img>
+                </button>
+            </div>
         )
     }
 }
