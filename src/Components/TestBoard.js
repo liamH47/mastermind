@@ -52,7 +52,6 @@ class TestBoard extends Component {
 
     renderFeedBack = () => {
         let feedback = [];
-        let obj = {};
         for(let i = 0; i < 40; i++){
             feedback.push(i)
         }
