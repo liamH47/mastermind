@@ -16,7 +16,9 @@ h1 {
   font-size: 4rem;
 }
 
-
+h4 {
+  font-size: 1.5rem;
+}
 
 button {
   border-radius: 2px;
@@ -43,15 +45,25 @@ body {
   border: 1px solid blue;
   width: 40%;
   justify-content: center;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   margin: 0 auto;
   padding: .25em;
-  height: 50vw;
+  /* height: 50vw; */
 }
 
 .start-form button {
   font-size: 2rem;
+  margin-top: 2em;
+}
+
+.start-form label {
+  margin: 0.5em;
+  font-size: 1rem;
+}
+
+.start-form input {
+  margin: 0.25em;
 }
 
 .secret-container{

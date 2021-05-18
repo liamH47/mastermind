@@ -26,6 +26,8 @@ import ReplayButton from './ReplayButton';
  * fix flow of start game. e.g. make sure that when you finish a game you are able to reset or go back to form
  * fix timeout to stop when tries = 0 and reveal code
  * also need to fix timer so that when you submit a guess the timer resets
+ * add a reset button/
+ *      -needs to take back to start form, might just need to set gameStarted to false
  * //
  * 
 
@@ -59,7 +61,9 @@ class GameBoard extends React.Component {
                 tries: obj.tries,
                 gameStarted: obj.gameStarted,
                 guesses: obj.guesses,
-                revealCode: obj.revealCode
+                revealCode: obj.revealCode,
+                timer: obj.timer,
+                // options: obj.options
             })      
         })
         console.log(this.state)
@@ -142,7 +146,7 @@ class GameBoard extends React.Component {
                 {this.state.gameStarted ?
                 <>
                 <div>
-                    {this.state.timer ?
+                    {this.state.timer && this.state.tries ?
                     <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
                     : null}
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
