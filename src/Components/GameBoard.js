@@ -48,10 +48,9 @@ class GameBoard extends React.Component {
         return axios.get('http://localhost:3001/rng')
         .then(response => response.data)
     };
-    //this may need to take an object instead of an event, or maybe both
-    //can pass a state that will determine the game options
+
     startGame = (obj) => {
-        // e.preventDefault();
+
         this.getCode()
         .then((code) => {
             this.setState({
@@ -142,7 +141,7 @@ class GameBoard extends React.Component {
                 {this.state.gameStarted ?
                 <>
                 <div>
-                    {this.state.timer ?
+                    {this.state.timer && this.state.tries ?
                     <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
                     : null}
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
