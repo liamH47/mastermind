@@ -61,7 +61,9 @@ class GameBoard extends React.Component {
                 tries: obj.tries,
                 gameStarted: obj.gameStarted,
                 guesses: obj.guesses,
-                revealCode: obj.revealCode
+                revealCode: obj.revealCode,
+                timer: obj.timer,
+                // options: obj.options
             })      
         })
         console.log(this.state)
