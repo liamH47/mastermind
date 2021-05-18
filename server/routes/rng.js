@@ -50,7 +50,7 @@ const router = express.Router();
     //                 "apiKey": process.env.apiKey,
     //                 "n": 4,
     //                 "min": 0,
-    //                 "max": ,
+    //                 "max": req.params.id,
     //                 "replacement": true,
     //                 "base": 10
     //             },
