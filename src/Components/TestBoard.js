@@ -27,7 +27,7 @@ class TestBoard extends Component {
         let newArr = [];
         let guesses = this.props.guesses
         for(let i = 0; i < guesses.length; i++){
-            Array.prototype.push.apply(newArr, guesses[i].guess);
+            newArr.push(guesses[i].guess);
         }
         this.setState({ guessArray: newArr });
     }
@@ -45,7 +45,7 @@ class TestBoard extends Component {
         let newArr2 = [];
         let guesses = this.props.guesses;
         for(let i = 0; i < guesses.length; i++){
-            Array.prototype.push.apply(newArr2, guesses[i].feedBack);
+            newArr2.push(guesses[i].feedBack);
         }
         this.setState({ feedArray: newArr2 });
     }
