@@ -22,6 +22,43 @@ import Timer from './Timer';
  * //easy game setting to add could be make feedback more explicit by not sorting array
  * sort guess arrays so that feedback does not give away order
  *  ^ this could tie into settings. could have an easier setting where the hints are in order
+ * 
+ * plans for tuesday(LAST FULL DAY!)
+ * implement fixed check guess function
+ * clean up code 
+ * get the start form working
+ * program the setting for more or less number options
+ * fix flow of start game. e.g. make sure that when you finish a game you are able to reset or go back to form
+ * fix timeout to stop when tries = 0 and reveal code
+ * fix board and guess button container so that they look better on resize
+ * also need to fix timer so that when you submit a guess the timer resets
+ * //
+ * 
+ * function checkGuess(guess, code){
+  let feedBack = [];
+  for(let i = 0; i < guess.length; i++){
+    if(code[i] === guess[i]){
+      feedBack.push("rightSpot");
+      guess[i] = -1;
+      code[i] = -1;
+    }
+  }
+  for(let i = 0; i < guess.length; i++){
+    let notIncluded = true;
+    if(code[i] === -1) continue;
+    for(let j = 0; j < guess.length; j++){
+      if(guess[j] === -1) continue;
+      else if(code[i] === guess[j]){
+        feedBack.push('sortOf');
+        guess[j] = -1;
+        notIncluded = false;
+      }
+    }
+     if(notIncluded) feedBack.push('wrong');
+  }
+  return feedBack
+  
+}
 */
 
 class GameBoard extends React.Component {
@@ -59,33 +96,42 @@ class GameBoard extends React.Component {
         this.checkGuess(arr, secret)
         console.log(arr, secret);
     }
-
-    checkGuess = (arr1, arr2) => {
+    checkGuess = (userGuess, code) => {
         let guessObj = {
             guess: [],
             feedBack: []
         }
-        let rightSpot = 0;
-        guessObj.guess = arr1;
-        for(let i = 0; i < arr1.length; i++){
-          if(arr1[i] === arr2[i]){
-            rightSpot++;
-            guessObj.feedBack.push("rightSpot");
-            if(rightSpot === 4) {
-               console.log("you won!");
-               return this.setState({
-                    guesses: [...this.state.guesses, guessObj],
-                    revealCode: !this.state.revealCode,
-                    score: this.state.score + 1 + this.state.tries,
-                    tries: this.state.tries - 1
-                })
+        guessObj.guess = userGuess;
+        if(userGuess === code) {
+            guessObj.feedBack = ["rightSpot", "rightSpot", "rightSpot", "rightSpot"]
+            return this.setState({
+                guesses: [...this.state.guesses, guessObj],
+                revealCode: !this.state.revealCode,
+                score: this.state.score + 1 + this.state.tries,
+                tries: this.state.tries - 1           
+            })
+        }
+        let guessCopy = [...userGuess];
+        let codeCopy = [...code];
+        for(let i = 0; i < guessCopy.length; i++){
+            if(codeCopy[i] === guessCopy[i]){
+                guessObj.feedBack.push("rightSpot");
+                guessCopy[i] = -1;
+                codeCopy[i] = -1;
             }
-          } else if (!arr2.includes(arr1[i])){
-            guessObj.feedBack.push("wrong");
-          } else {            
-            guessObj.feedBack.push("sorta");
-          }
-        
+        }
+        for(let i = 0; i < guessCopy.length; i++){
+            let notIncluded = true;
+            if(codeCopy[i] === -1) continue;
+            for(let j = 0; j < guessCopy.length; j++){
+                if(guessCopy[j] = -1) continue;
+                else if(codeCopy[i] === guessCopy[j]){
+                    guessObj.feedBack.push("sortOf");
+                    guessCopy[j] = -1;
+                    notIncluded = false;
+                }
+            }
+            if(notIncluded) guessObj.feedBack.push("wrong")
         }
         let sorted = guessObj.feedBack.sort();
         guessObj.feedBack = sorted;
@@ -94,6 +140,66 @@ class GameBoard extends React.Component {
             tries: this.state.tries - 1
         }); 
     }
+    // checkGuess = (arr1, arr2) => {
+    //     let guessObj = {
+    //         guess: [],
+    //         feedBack: []
+    //     }
+    //     let rightSpot = 0;
+    //     guessObj.guess = arr1;
+    //     for(let i = 0; i < arr1.length; i++){
+    //       if(arr1[i] === arr2[i]){
+    //         rightSpot++;
+    //         guessObj.feedBack.push("rightSpot");
+    //         if(rightSpot === 4) {
+    //            console.log("you won!");
+    //            return this.setState({
+    //                 guesses: [...this.state.guesses, guessObj],
+    //                 revealCode: !this.state.revealCode,
+    //                 score: this.state.score + 1 + this.state.tries,
+    //                 tries: this.state.tries - 1
+    //             })
+    //         }
+    //       } else if (!arr2.includes(arr1[i])){
+    //         guessObj.feedBack.push("wrong");
+    //       } else {            
+    //         guessObj.feedBack.push("sorta");
+    //       }
+        
+    //     }
+    //     let sorted = guessObj.feedBack.sort();
+    //     guessObj.feedBack = sorted;
+    //     this.setState({ 
+    //         guesses: [...this.state.guesses, guessObj],
+    //         tries: this.state.tries - 1
+    //     }); 
+    // }
+
+//     * function checkGuess(guess, code){
+//     let feedBack = [];
+//     for(let i = 0; i < guess.length; i++){
+//       if(code[i] === guess[i]){
+//         feedBack.push("rightSpot");
+//         guess[i] = -1;
+//         code[i] = -1;
+//       }
+//     }
+//     for(let i = 0; i < guess.length; i++){
+//       let notIncluded = true;
+//       if(code[i] === -1) continue;
+//       for(let j = 0; j < guess.length; j++){
+//         if(guess[j] === -1) continue;
+//         else if(code[i] === guess[j]){
+//           feedBack.push('sortOf');
+//           guess[j] = -1;
+//           notIncluded = false;
+//         }
+//       }
+//        if(notIncluded) feedBack.push('wrong');
+//     }
+//     return feedBack
+    
+//   }
 
     outOfTime = () => {
         let guessObj = {
@@ -122,8 +228,8 @@ class GameBoard extends React.Component {
                 <>
                 <div>
                     {this.state.timer ?
-                    <Timer outOfTime={this.outOfTime} count={5} />
-                    : <> </>
+                    <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
+                    : null
                     }
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
                     <> {this.state.revealCode ?
