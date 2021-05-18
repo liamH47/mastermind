@@ -20,7 +20,6 @@ class TestBoard extends Component {
             this.setGuesses();
             this.setFeedBack();
         }
-        // console.log("guesses in cdu", this.props.guesses[0].included)
     }
     
 
@@ -60,9 +59,7 @@ class TestBoard extends Component {
 
         return feedback.map((el, idx) => <FeedBack feedBack={this.state.feedArray[idx]} index={idx} text={el} key={idx}  />)
     }
-//pass feedback the number of correct, number of rightspot. it will render that many of
-// those, and then 4 - the total(right + rightspot) empty ones 
-//will need images for each thing (star, coin, x)
+
     render() {
         const { options, guesses, submitHandler } = this.props;
         return (

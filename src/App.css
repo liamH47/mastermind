@@ -3,7 +3,6 @@
     font-family: SuperMario;
     background: lightskyblue;
     -webkit-text-stroke:2px black;
-    /* text-shadow: 1px black; */
   }
 
 .App {
@@ -37,17 +36,6 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* background: url("/img/background/mario-background.jpg"); */
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-
-.app-header {
-
 }
 
 .start-form {
@@ -98,10 +86,6 @@ body {
 .character-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  /* width: 100%; 
-  grid-template-columns: repeat(2, 1fr); */
-  /* display: flex;
-  flex-direction: column; */
   margin-top: 2em;
 }
 
@@ -130,7 +114,6 @@ body {
   border: 1px solid black;
   overflow: hidden;
   image-rendering: pixelated;
-  background: lightskyblue;
 }
 
 .guess-square div{
@@ -142,16 +125,10 @@ body {
   border: 1px solid black;
   overflow: hidden;
   image-rendering: pixelated;
-  /* display: grid; */
-  /* grid-template-columns: repeat(2, 1fr); */
+  background: rgb(30, 34, 34);
 }
 
 .feedback-square div{
-  /* flex-shrink: 0; */
-  /* width: 100%!important; */
-  /* height: 100%!important; */
-  /* height: auto;
-  image-rendering: pixelated; */
   width: 100%;
   height: 100%;
 }

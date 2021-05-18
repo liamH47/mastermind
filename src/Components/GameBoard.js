@@ -5,6 +5,7 @@ import GuessList from './GuessList';
 import CodeContainer from './CodeContainer';
 import TestBoard from './TestBoard';
 import StartForm from './StartForm';
+import Timer from './Timer';
 
 /**
  * plans for today + this weekend
@@ -18,6 +19,7 @@ import StartForm from './StartForm';
  * fix aesthetics of current guess container + guess form
  * add background
  * start adding game settings. probably timer first
+ * //easy game setting to add could be make feedback more explicit by not sorting array
  * sort guess arrays so that feedback does not give away order
  *  ^ this could tie into settings. could have an easier setting where the hints are in order
 */
@@ -31,7 +33,8 @@ class GameBoard extends React.Component {
         options: [0,1,2,3,4,5,6,7],
         guesses: [],
         revealCode: false,
-        score: 0
+        score: 0,
+        timer: 0
     };
 
     getCode = () => {
@@ -57,7 +60,6 @@ class GameBoard extends React.Component {
         console.log(arr, secret);
     }
 
-
     checkGuess = (arr1, arr2) => {
         let guessObj = {
             guess: [],
@@ -78,21 +80,39 @@ class GameBoard extends React.Component {
                     tries: this.state.tries - 1
                 })
             }
-            //this else if is not quite right. 0 is messing it up.
           } else if (!arr2.includes(arr1[i])){
             guessObj.feedBack.push("wrong");
-          } else {
-            guessObj.feedBack.push("included");
+          } else {            
+            guessObj.feedBack.push("sorta");
           }
         
         }
+        let sorted = guessObj.feedBack.sort();
+        guessObj.feedBack = sorted;
         this.setState({ 
             guesses: [...this.state.guesses, guessObj],
             tries: this.state.tries - 1
-        });
-        
-    
+        }); 
     }
+
+    outOfTime = () => {
+        let guessObj = {
+            guess: [10,10,10,10],
+            feedBack: ['wrong', 'wrong', 'wrong', 'wrong']
+        }
+        this.setState({
+            guesses: [...this.state.guesses, guessObj],
+            tries: this.state.tries - 1
+        })
+    }
+
+    renderReplayButton = () => {
+        const { tries, revealCode } = this.state;
+        if(revealCode || tries === 0){
+            return <button >Play Again</button>
+        }
+    }
+    //will add a 'play again' button to display at end of game
     render() {
         return (
             <section className='game-container'>
@@ -101,6 +121,7 @@ class GameBoard extends React.Component {
                 {this.state.gameStarted ?
                 <>
                 <div>
+                    <Timer outOfTime={this.outOfTime} count={30} />
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
                     <> {this.state.revealCode ?
                         <h3>Congratulations, you won!</h3>
@@ -114,11 +135,10 @@ class GameBoard extends React.Component {
                         changeHandler={this.changeHandler}
                         submitHandler={this.submitHandler}
                     />
-                    {/* <GuessForm options={this.state.options} changeHandler={this.changeHandler} submitHandler={this.submitHandler}/>                 */}
                 </>
                     : <StartForm startGame={this.startGame}/>
                 }
-
+                {this.renderReplayButton()}
             </section>
         )
     }
