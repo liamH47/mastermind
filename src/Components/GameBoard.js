@@ -119,22 +119,29 @@ class GameBoard extends React.Component {
                 codeCopy[i] = -1;
                 rightSpot++;
             }
+            console.log("in first loop:", guessCopy, codeCopy);
         }
+        console.log("right after first loop:", guessCopy, codeCopy);
         //maybe the fix is to do a .includes on the code and then set that = -1
         for(let i = 0; i < guessCopy.length; i++){
             let notIncluded = true;
             if(codeCopy[i] === -1) continue;
+            console.log("beginning of second loop:", guessCopy, codeCopy)
             for(let j = 0; j < guessCopy.length; j++){
-                if(guessCopy[j] = -1) continue;
+                if(guessCopy[j] === -1) continue;
                 else if(codeCopy[i] === guessCopy[j]){
+                    console.log("in else if")
                     guessObj.feedBack.push("sortOf");
                     guessCopy[j] = -1;
                     notIncluded = false;
+                    break;
                 }
             }
             if(notIncluded) guessObj.feedBack.push("wrong")
+            console.log("in second loop:", guessCopy, codeCopy);
         }
         let sorted = guessObj.feedBack.sort();
+        console.log("final log:" , sorted);
         guessObj.feedBack = sorted;
         this.setState({ 
             guesses: [...this.state.guesses, guessObj],
