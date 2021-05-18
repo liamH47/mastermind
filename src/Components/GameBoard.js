@@ -4,6 +4,7 @@ import CodeContainer from './CodeContainer';
 import TestBoard from './TestBoard';
 import StartForm from './StartForm';
 import Timer from './Timer';
+import ReplayButton from './ReplayButton';
 
 /**
  * plans for today + this weekend
@@ -12,9 +13,6 @@ import Timer from './Timer';
  *          set static initial state that will be updated when start game is pressed, and can be reset when the game ends or player wants to restart
  *          make it so that when the player wins they have the option to start a new game
  *          also winning guess needs to show
- * adjust size of secret code mystery boxes
- * fix feedback logic
- * fix aesthetics of current guess container + guess form
  * add background
  * start adding game settings. probably timer first
  * //easy game setting to add could be make feedback more explicit by not sorting array
@@ -22,41 +20,15 @@ import Timer from './Timer';
  *  ^ this could tie into settings. could have an easier setting where the hints are in order
  * 
  * plans for tuesday(LAST FULL DAY!)
- * implement fixed check guess function
  * clean up code 
  * get the start form working
  * program the setting for more or less number options
  * fix flow of start game. e.g. make sure that when you finish a game you are able to reset or go back to form
  * fix timeout to stop when tries = 0 and reveal code
- * fix board and guess button container so that they look better on resize
  * also need to fix timer so that when you submit a guess the timer resets
  * //
  * 
- * function checkGuess(guess, code){
-  let feedBack = [];
-  for(let i = 0; i < guess.length; i++){
-    if(code[i] === guess[i]){
-      feedBack.push("rightSpot");
-      guess[i] = -1;
-      code[i] = -1;
-    }
-  }
-  for(let i = 0; i < guess.length; i++){
-    let notIncluded = true;
-    if(code[i] === -1) continue;
-    for(let j = 0; j < guess.length; j++){
-      if(guess[j] === -1) continue;
-      else if(code[i] === guess[j]){
-        feedBack.push('sortOf');
-        guess[j] = -1;
-        notIncluded = false;
-      }
-    }
-     if(notIncluded) feedBack.push('wrong');
-  }
-  return feedBack
-  
-}
+
 */
 
 class GameBoard extends React.Component {
@@ -76,14 +48,18 @@ class GameBoard extends React.Component {
         return axios.get('http://localhost:3001/rng')
         .then(response => response.data)
     };
-    
-    startGame = (e) => {
-        e.preventDefault();
+    //this may need to take an object instead of an event, or maybe both
+    //can pass a state that will determine the game options
+    startGame = (obj) => {
+        // e.preventDefault();
         this.getCode()
         .then((code) => {
             this.setState({
-                 gameStarted: !this.state.gameStarted,
-                 secretCode: code
+                secretCode: code,
+                tries: obj.tries,
+                gameStarted: obj.gameStarted,
+                guesses: obj.guesses,
+                revealCode: obj.revealCode
             })      
         })
         console.log(this.state)
@@ -99,17 +75,7 @@ class GameBoard extends React.Component {
             guess: userGuess,
             feedBack: []
         }
-        let rightSpot = 0;
-        guessObj.guess = userGuess;
-        if(userGuess === code) {
-            guessObj.feedBack = ["rightSpot", "rightSpot", "rightSpot", "rightSpot"]
-            return this.setState({
-                guesses: [...this.state.guesses, guessObj],
-                revealCode: !this.state.revealCode,
-                score: this.state.score + 1 + this.state.tries,
-                tries: this.state.tries - 1           
-            })
-        }
+        let correct = 0;
         let guessCopy = [...userGuess];
         let codeCopy = [...code];
         for(let i = 0; i < guessCopy.length; i++){
@@ -117,97 +83,38 @@ class GameBoard extends React.Component {
                 guessObj.feedBack.push("rightSpot");
                 guessCopy[i] = -1;
                 codeCopy[i] = -1;
-                rightSpot++;
+                correct++;
             }
-            console.log("in first loop:", guessCopy, codeCopy);
         }
-        console.log("right after first loop:", guessCopy, codeCopy);
-        //maybe the fix is to do a .includes on the code and then set that = -1
+        if(correct === 4){
+            return this.setState({
+                guesses: [...this.state.guesses, guessObj],
+                revealCode: !this.state.revealCode,
+                score: this.state.score + 1 + this.state.tries,
+                tries: this.state.tries - 1                  
+            })          
+        }
         for(let i = 0; i < guessCopy.length; i++){
             let notIncluded = true;
             if(codeCopy[i] === -1) continue;
-            console.log("beginning of second loop:", guessCopy, codeCopy)
             for(let j = 0; j < guessCopy.length; j++){
                 if(guessCopy[j] === -1) continue;
                 else if(codeCopy[i] === guessCopy[j]){
-                    console.log("in else if")
                     guessObj.feedBack.push("sortOf");
                     guessCopy[j] = -1;
                     notIncluded = false;
                     break;
                 }
             }
-            if(notIncluded) guessObj.feedBack.push("wrong")
-            console.log("in second loop:", guessCopy, codeCopy);
+            if(notIncluded) guessObj.feedBack.push("wrong");
         }
         let sorted = guessObj.feedBack.sort();
-        console.log("final log:" , sorted);
         guessObj.feedBack = sorted;
         this.setState({ 
             guesses: [...this.state.guesses, guessObj],
             tries: this.state.tries - 1
         }); 
     }
-    // checkGuess = (arr1, arr2) => {
-    //     let guessObj = {
-    //         guess: [],
-    //         feedBack: []
-    //     }
-    //     let rightSpot = 0;
-    //     guessObj.guess = arr1;
-    //     for(let i = 0; i < arr1.length; i++){
-    //       if(arr1[i] === arr2[i]){
-    //         rightSpot++;
-    //         guessObj.feedBack.push("rightSpot");
-    //         if(rightSpot === 4) {
-    //            console.log("you won!");
-    //            return this.setState({
-    //                 guesses: [...this.state.guesses, guessObj],
-    //                 revealCode: !this.state.revealCode,
-    //                 score: this.state.score + 1 + this.state.tries,
-    //                 tries: this.state.tries - 1
-    //             })
-    //         }
-    //       } else if (!arr2.includes(arr1[i])){
-    //         guessObj.feedBack.push("wrong");
-    //       } else {            
-    //         guessObj.feedBack.push("sorta");
-    //       }
-        
-    //     }
-    //     let sorted = guessObj.feedBack.sort();
-    //     guessObj.feedBack = sorted;
-    //     this.setState({ 
-    //         guesses: [...this.state.guesses, guessObj],
-    //         tries: this.state.tries - 1
-    //     }); 
-    // }
-
-//     * function checkGuess(guess, code){
-//     let feedBack = [];
-//     for(let i = 0; i < guess.length; i++){
-//       if(code[i] === guess[i]){
-//         feedBack.push("rightSpot");
-//         guess[i] = -1;
-//         code[i] = -1;
-//       }
-//     }
-//     for(let i = 0; i < guess.length; i++){
-//       let notIncluded = true;
-//       if(code[i] === -1) continue;
-//       for(let j = 0; j < guess.length; j++){
-//         if(guess[j] === -1) continue;
-//         else if(code[i] === guess[j]){
-//           feedBack.push('sortOf');
-//           guess[j] = -1;
-//           notIncluded = false;
-//         }
-//       }
-//        if(notIncluded) feedBack.push('wrong');
-//     }
-//     return feedBack
-    
-//   }
 
     outOfTime = () => {
         let guessObj = {
@@ -223,7 +130,7 @@ class GameBoard extends React.Component {
     renderReplayButton = () => {
         const { tries, revealCode } = this.state;
         if(revealCode || tries === 0){
-            return <button >Play Again</button>
+            return <ReplayButton startGame={this.startGame}/>
         }
     }
     //will add a 'play again' button to display at end of game
@@ -237,12 +144,11 @@ class GameBoard extends React.Component {
                 <div>
                     {this.state.timer ?
                     <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
-                    : null
-                    }
+                    : null}
                     <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
                     <> {this.state.revealCode ?
                         <h3>Congratulations, you won!</h3>
-                        : <h3>You have {this.state.tries} tries left</h3>
+                        : <h3>Lives:  {this.state.tries}</h3>
                     }
                     </>
                 </div>
@@ -251,6 +157,7 @@ class GameBoard extends React.Component {
                         guesses={this.state.guesses}
                         changeHandler={this.changeHandler}
                         submitHandler={this.submitHandler}
+                        tries={this.state.tries}
                     />
                 </>
                     : <StartForm startGame={this.startGame}/>
@@ -262,12 +169,4 @@ class GameBoard extends React.Component {
 };
 export default GameBoard
 
-/**
- * css to work on
- * 1. make images fit perfectly in square
- * 2. get skeleton of start game form fleshed out for when i add rules
- * 3. adjust size and positioning of current guess and guess form so they appear next to board
- * 4. create a nicer header
- * 5. maybe change everything to some kind of mario font
- */
 

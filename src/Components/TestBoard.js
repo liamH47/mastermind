@@ -61,7 +61,7 @@ class TestBoard extends Component {
     }
 
     render() {
-        const { options, guesses, submitHandler } = this.props;
+        const { options, guesses, submitHandler, tries } = this.props;
         return (
             <section className='current-game'>
                 <div className='board-container'>
@@ -76,6 +76,7 @@ class TestBoard extends Component {
                     options={options} 
                     guesses={guesses}
                     submitHandler={submitHandler}
+                    tries={tries}
                 />
             </section>
         )

@@ -1,19 +1,3 @@
-// import React from 'react'
-
-// class extends React.Component {
-
-//     const localClickHandler = (src) => {
-//         // let num = parseInt(src);
-//         clickHandler(src);
-//     }
-
-//     return (
-
-//     )
-// }
-
-
-
 import React, { Component } from 'react'
 
 class GuessButton extends Component {
@@ -23,10 +7,10 @@ class GuessButton extends Component {
     }
 
     render() {
-        const { source, isDisabled } = this.props;
+        const { source, isDisabled, tries } = this.props;
         return (
             <div>
-                <button disabled={isDisabled >= 4} onClick={this.localClickHandler} name={`${source}`}>
+                <button disabled={isDisabled >= 4 || !tries} onClick={this.localClickHandler} name={`${source}`}>
                     <img src={`/img/chars/${source}.jpg`}  alt={source}></img>
                 </button>
             </div>
