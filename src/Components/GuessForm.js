@@ -5,13 +5,7 @@ import GuessButton from './GuessButton';
 class GuessForm extends Component {
     state = {
         guessArray: []
-        // buttonsDisabled: false
     }
-    // changeHandler = (e) => {
-    //     let currentGuess = [...this.state.guessArray, e.target.name];
-    //     this.setState({ guessArray: currentGuess })
-
-    // }
 
     clickHandler = (num) => {
         console.log(" num in clickhandle:", num)
@@ -23,7 +17,6 @@ class GuessForm extends Component {
     }
 
     localSubHandler = () => {
-        // e.preventDefault();
         let parsed = this.state.guessArray.map(el => parseInt(el));
         this.setState({ guessArray: []})
         this.props.submitHandler(parsed);

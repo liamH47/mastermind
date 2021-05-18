@@ -12,8 +12,6 @@ class CodeContainer extends Component {
         } else {
             return this.props.secret.map((number, index) => <img key={index} alt={number} src="/img/mystery/block.jpg"></img>)
         }
-    //    if(!this.props.revealCode){
-    //    }
     }
 
     render() {

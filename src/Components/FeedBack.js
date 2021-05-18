@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TinySquare from './TinySquare'
+
 
 class FeedBack extends Component {
 
