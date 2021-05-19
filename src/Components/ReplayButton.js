@@ -7,7 +7,7 @@ class ReplayButton extends Component {
         gameStarted: true,
         guesses: [],
         revealCode: false,
-        // options: this.props.options
+        options: this.props.options
 
     }
 
@@ -18,20 +18,12 @@ class ReplayButton extends Component {
         startGame(this.state)
     }
 
-    localRestartHandler = (e) => {
-        this.setState({ gameStarted: false });
-        this.localStartHandler(e);
-        
-    }
 
     render() {
         return (
             <div>
                 <div>
-                    <button onClick={this.localStartHandler}>Play Again</button>    
-                </div>
-                <div>
-                    <button onClick={this.localRestartHandler}>Change Settings</button>
+                    <button className='play-again' onClick={this.localStartHandler}>Play Again</button>    
                 </div>
             </div>
         )

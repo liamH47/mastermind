@@ -16,8 +16,16 @@ h1 {
   font-size: 4rem;
 }
 
+h3 {
+  font-size: 1.75rem;
+}
+
 h4 {
   font-size: 1.5rem;
+}
+
+p {
+  font-size: 1.25rem;
 }
 
 button {
@@ -42,7 +50,7 @@ body {
 }
 
 .start-form {
-  border: 1px solid blue;
+  border: 5px solid black;
   width: 40%;
   justify-content: center;
   align-items: center;
@@ -57,11 +65,15 @@ body {
 
 .start-form label {
   margin: 0.5em;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .start-form input {
   margin: 0.25em;
+}
+
+.rules-header {
+  color: rgb(236, 60, 60);
 }
 
 .secret-container{
@@ -69,9 +81,11 @@ body {
   display: flex;
   list-style-type: none;
   font-size: 2rem;
-  padding: 1em;
   background: lightskyblue;
+}
 
+.timer-container {
+  font-size: 2rem;
 }
 
 .secret-container img {
@@ -117,7 +131,7 @@ body {
 .button-container button {
   margin: .25em;
   width: 75%;
-  font-size: 2rem;
+  font-size: 1.5rem;
   border: 2px solid black;
   border-radius: 3px;
 }
@@ -170,8 +184,8 @@ body {
   margin: 0 auto;
   background: rgb(98, 204, 98);
   min-width: 200px;
-  min-height: 520px;
-  max-height: 400px;
+  min-height: 600px;
+  max-height: 780px;
   max-width: 392px;
 }
 
@@ -192,7 +206,21 @@ body {
   margin: 0;
   padding: 0;
   grid-template-columns: repeat(4, 1fr);
+}
 
+.play-again {
+  font-size: 1.5em;
+}
+
+.feedback-key {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.feedback-key img {
+  width: 30px;
+  margin: 0.25em;
 }
 
 .feedback {

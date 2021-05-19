@@ -1,148 +1,83 @@
-import axios from 'axios'
-import React from 'react';
-import CodeContainer from './CodeContainer';
-import TestBoard from './TestBoard';
-import StartForm from './StartForm';
-import Timer from './Timer';
-import ReplayButton from './ReplayButton';
+import React, { Component } from 'react';
+import Guess from './Guess';
+import FeedBack from './FeedBack';
+import GuessForm from './GuessForm';
 
-class GameBoard extends React.Component {
+class GameBoard extends Component {
 
     state = {
-        secretCode: [],
-        tries: 10,
-        gameStarted: false,
-        options: 8,
-        guesses: [],
-        revealCode: false,
-        score: 0,
-        timer: 0
-    };
-
-    getCode = (num) => {
-        return axios.get(`http://localhost:3001/rng/${num}`)
-        .then(response => response.data)
-    };
-
-    startGame = (obj) => {
-
-        this.getCode(this.state.options - 1)
-        .then((code) => {
-            this.setState({
-                secretCode: code,
-                tries: obj.tries,
-                gameStarted: obj.gameStarted,
-                guesses: obj.guesses,
-                revealCode: obj.revealCode,
-                timer: obj.timer,
-                options: obj.options
-            })      
-        })
-        console.log(this.state)
+        guessArray: [],
+        feedArray: []
     }
 
-    submitHandler = (arr) => {
-        let secret = this.state.secretCode;
-        this.checkGuess(arr, secret)
-        console.log(arr, secret);
+    componentDidMount() {
+        this.setGuesses();
+        this.setFeedBack();
     }
-    checkGuess = (userGuess, code) => {
-        let guessObj = {
-            guess: userGuess,
-            feedBack: []
+    
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps !== this.props){
+            this.setGuesses();
+            this.setFeedBack();
         }
-        let correct = 0;
-        let guessCopy = [...userGuess];
-        let codeCopy = [...code];
-        for(let i = 0; i < guessCopy.length; i++){
-            if(codeCopy[i] === guessCopy[i]){
-                guessObj.feedBack.push("rightSpot");
-                guessCopy[i] = -1;
-                codeCopy[i] = -1;
-                correct++;
-            }
+    }   
+
+    setGuesses = () => {
+        let newArr = [];
+        let guesses = this.props.guesses
+        for(let i = 0; i < guesses.length; i++){
+            Array.prototype.push.apply(newArr, guesses[i].guess);
         }
-        if(correct === 4){
-            return this.setState({
-                guesses: [...this.state.guesses, guessObj],
-                revealCode: !this.state.revealCode,
-                score: this.state.score + 1 + this.state.tries,
-                tries: this.state.tries - 1                  
-            })          
+        this.setState({ guessArray: newArr });
+    }    
+
+    renderGuesses = () => {
+        let items = [];
+        for(let i = 0; i < 40; i++){
+            items.push(<Guess key={i}/>);
         }
-        for(let i = 0; i < guessCopy.length; i++){
-            let notIncluded = true;
-            if(codeCopy[i] === -1) continue;
-            for(let j = 0; j < guessCopy.length; j++){
-                if(guessCopy[j] === -1) continue;
-                else if(codeCopy[i] === guessCopy[j]){
-                    guessObj.feedBack.push("sortOf");
-                    guessCopy[j] = -1;
-                    notIncluded = false;
-                    break;
-                }
-            }
-            if(notIncluded) guessObj.feedBack.push("wrong");
-        }
-        let sorted = guessObj.feedBack.sort();
-        guessObj.feedBack = sorted;
-        this.setState({ 
-            guesses: [...this.state.guesses, guessObj],
-            tries: this.state.tries - 1
-        }); 
+        return items.map((el, index) => <Guess index={`${index}`} key={index} guesses={this.state.guessArray}/>)
     }
 
-    outOfTime = () => {
-        let guessObj = {
-            guess: [10,10,10,10],
-            feedBack: ['wrong', 'wrong', 'wrong', 'wrong']
+    setFeedBack = () => {
+        let newArr2 = [];
+        let guesses = this.props.guesses;
+        for(let i = 0; i < guesses.length; i++){
+            Array.prototype.push.apply(newArr2, guesses[i].feedBack);
         }
-        this.setState({
-            guesses: [...this.state.guesses, guessObj],
-            tries: this.state.tries - 1
-        })
+        this.setState({ feedArray: newArr2 });
     }
 
-    renderReplayButton = () => {
-        const { tries, revealCode } = this.state;
-        if(revealCode || tries === 0){
-            return <ReplayButton options={this.state.options} startGame={this.startGame}/>
+    renderFeedBack = () => {
+        let feedback = [];
+        for(let i = 0; i < 40; i++){
+            feedback.push(i)
         }
+
+        return feedback.map((el, idx) => <FeedBack feedBack={this.state.feedArray[idx]} index={idx} text={el} key={idx}  />)
     }
 
     render() {
+        const { options, guesses, submitHandler, tries } = this.props;
         return (
-            <section className='game-container'>
-                <h1>Mastermind!</h1>
-                <h3>Session Score: {this.state.score}</h3>
-                {this.state.gameStarted ?
-                <>
-                <div>
-                    {this.state.timer && this.state.tries ?
-                    <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
-                    : null}
-                    <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} />
-                    <> {this.state.revealCode ?
-                        <h3>Congratulations, you won!</h3>
-                        : <h3>Lives:  {this.state.tries}</h3>
-                    }
-                    </>
+            <section className='current-game'>
+                <div className='board-container'>
+                    <div className='guesses'>
+                        {this.renderGuesses()}
+                    </div>
+                    <div className='feedback'>
+                        {this.renderFeedBack()}
+                    </div>
                 </div>
-                    <TestBoard 
-                        options={this.state.options} 
-                        guesses={this.state.guesses}
-                        changeHandler={this.changeHandler}
-                        submitHandler={this.submitHandler}
-                        tries={this.state.tries}
-                    />
-                </>
-                    : <StartForm startGame={this.startGame}/>
-                }
-                {this.renderReplayButton()}
+                <GuessForm 
+                    options={options} 
+                    guesses={guesses}
+                    submitHandler={submitHandler}
+                    tries={tries}
+                />
             </section>
         )
     }
-};
-export default GameBoard
+}
 
-
+export default GameBoard;
