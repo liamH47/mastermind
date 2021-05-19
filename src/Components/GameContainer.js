@@ -103,40 +103,41 @@ class GameContainer extends React.Component {
     }
 
     renderReplayButton = () => {
-        const { tries, revealCode } = this.state;
+        const { tries, revealCode, options, timer } = this.state;
         if(revealCode || tries === 0){
-            return <ReplayButton options={this.state.options} startGame={this.startGame}/>
+            return <ReplayButton options={options} startGame={this.startGame} timer={timer}/>
         }
     }
 
     render() {
+        const { score, secretCode, revealCode, tries, timer, options, guesses, gameStarted } = this.state;
         return (
             <section className='game-container'>
                 <h1>Mastermind!</h1>
-                {this.state.gameStarted ?
+                {gameStarted ?
                 <>
                 <div>
-                    <h3>Session Score: {this.state.score}</h3>
+                    <h3>Session Score: {score}</h3>
                     {this.renderReplayButton()}
-                    <CodeContainer secret={this.state.secretCode} revealCode={this.state.revealCode} tries={this.state.tries} />
-                    <> {this.state.revealCode ?
+                    <CodeContainer secret={secretCode} revealCode={revealCode} tries={tries} />
+                    <> {revealCode ?
                         <h3>Congratulations, you won!</h3>
-                        : <h3>Lives:  {this.state.tries}</h3>
+                        : <h3>Lives:  {tries}</h3>
                     }
-                    {this.state.timer && this.state.tries ?
-                    <Timer outOfTime={this.outOfTime} count={this.state.timer} tries={this.state.tries} />
+                    {timer && tries ?
+                    <Timer outOfTime={this.outOfTime} count={timer} tries={tries} />
                     : null}
                     </>
                 </div>
                     <GameBoard 
-                        options={this.state.options} 
-                        guesses={this.state.guesses}
+                        options={options} 
+                        guesses={guesses}
                         submitHandler={this.submitHandler}
-                        tries={this.state.tries}
+                        tries={tries}
                     />
                 <FeedBackKey />  
                 </>
-                    : <StartForm startGame={this.startGame}/>
+                : <StartForm startGame={this.startGame}/>
                 }
 
             </section>
