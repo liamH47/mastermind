@@ -53,7 +53,6 @@ class GameBoard extends Component {
         for(let i = 0; i < 40; i++){
             feedback.push(i)
         }
-
         return feedback.map((el, idx) => <FeedBack feedBack={this.state.feedArray[idx]} index={idx} text={el} key={idx}  />)
     }
 

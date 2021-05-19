@@ -11,7 +11,7 @@ class FeedBack extends Component {
                     background: `url(/img/feedback/${this.props.feedBack}.png) center/cover no-repeat`
                 }}>
                 </div> 
-                : <></>}
+                : null}
             </div>
         )
     }

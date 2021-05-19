@@ -37,18 +37,18 @@ class StartForm extends Component {
                 <p>You can also adjust the number of possible characters in the code. Think of 6 as easy, 8 as normal, and 10 as hard.</p>
                 <form className='start-form' onSubmit={this.localStartHandler}>
                     <h4>Time Limit</h4>
-                    <label for='None'>None</label>
+                    <label htmlFor='None'>None</label>
                     <input type='radio' name='timer' value={0} onChange={this.changeHandler}/>
-                    <label for='30'>30s</label>
+                    <label htmlFor='30'>30s</label>
                     <input type='radio' name='timer' value={30} onChange={this.changeHandler}/>
-                    <label for='15'>15s</label>
+                    <label htmlFor='15'>15s</label>
                     <input type='radio' name='timer' value={15} onChange={this.changeHandler}/>
                     <h4>Amount of Options</h4>
-                    <label for='6'>6</label>
+                    <label htmlFor='6'>6</label>
                     <input type='radio' name='options' value={6} onChange={this.changeHandler}/>
-                    <label for='8'>8</label>
+                    <label htmlFor='8'>8</label>
                     <input type='radio' name='options' value={8} onChange={this.changeHandler}/>
-                    <label for='10'>10</label>
+                    <label htmlFor='10'>10</label>
                     <input type='radio' name='options' value={10} onChange={this.changeHandler}/>
                     <button type='submit'>Start Game</button>  
                 </form>

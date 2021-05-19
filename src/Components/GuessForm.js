@@ -35,8 +35,8 @@ class GuessForm extends Component {
         const { guessArray } = this.state;
         if(guessArray.length) {
             return guessArray.map(num =>             
-                    <img src={`/img/chars/${num}.jpg`} value={num} alt={num}/>
-                )
+                    <img src={`/img/chars/${num}.jpg`} key={num} value={num} alt={num}/>
+            )
         }
     }
 
