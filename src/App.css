@@ -45,11 +45,9 @@ body {
   border: 1px solid blue;
   width: 40%;
   justify-content: center;
-  /* display: flex; */
   align-items: center;
   margin: 0 auto;
   padding: .25em;
-  /* height: 50vw; */
 }
 
 .start-form button {
@@ -88,7 +86,6 @@ body {
 .current-guess-container{
   border: 2px solid black;
   width: 100%;
-  /* height: 10vw; */
   max-height: 100px;
   min-height: 50px;
 
@@ -171,8 +168,6 @@ body {
   height: 80vw;
   border: 5px solid black;
   margin: 0 auto;
-  /* display: flex;
-  flex-direction: column; */
   background: rgb(98, 204, 98);
   min-width: 200px;
   min-height: 520px;

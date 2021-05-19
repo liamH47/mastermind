@@ -20,8 +20,7 @@ class TestBoard extends Component {
             this.setGuesses();
             this.setFeedBack();
         }
-    }
-    
+    }   
 
     setGuesses = () => {
         let newArr = [];
@@ -30,8 +29,7 @@ class TestBoard extends Component {
             Array.prototype.push.apply(newArr, guesses[i].guess);
         }
         this.setState({ guessArray: newArr });
-    }
-    
+    }    
 
     renderGuesses = () => {
         let items = [];
