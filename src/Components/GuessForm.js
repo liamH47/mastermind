@@ -25,7 +25,11 @@ class GuessForm extends Component {
     renderButtons = () => {
         const { options, tries } = this.props;
         const {guessArray } = this.state;
-        return options.map(num => <GuessButton tries={tries} isDisabled={guessArray.length} source={`${num}`} key={num} clickHandler={this.clickHandler}/>);
+        let optArray = []
+        for(let i = 0; i < options; i++){
+            optArray.push(i);
+        }
+        return optArray.map(num => <GuessButton tries={tries} isDisabled={guessArray.length} source={`${num}`} key={num} clickHandler={this.clickHandler}/>);
     }
 
 
