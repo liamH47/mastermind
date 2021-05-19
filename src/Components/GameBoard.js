@@ -6,33 +6,6 @@ import StartForm from './StartForm';
 import Timer from './Timer';
 import ReplayButton from './ReplayButton';
 
-/**
- * plans for today + this weekend
- * work on the start game function. eventually, there will be a form that allows you to choose the settings for your game.
- *      for now, the following things are priorities:
- *          set static initial state that will be updated when start game is pressed, and can be reset when the game ends or player wants to restart
- *          make it so that when the player wins they have the option to start a new game
- *          also winning guess needs to show
- * add background
- * start adding game settings. probably timer first
- * //easy game setting to add could be make feedback more explicit by not sorting array
- * sort guess arrays so that feedback does not give away order
- *  ^ this could tie into settings. could have an easier setting where the hints are in order
- * 
- * plans for tuesday(LAST FULL DAY!)
- * clean up code 
- * get the start form working
- * program the setting for more or less number options
- * fix flow of start game. e.g. make sure that when you finish a game you are able to reset or go back to form
- * fix timeout to stop when tries = 0 and reveal code
- * also need to fix timer so that when you submit a guess the timer resets
- * add a reset button/
- *      -needs to take back to start form, might just need to set gameStarted to false
- * //
- * 
-
-*/
-
 class GameBoard extends React.Component {
 
     state = {
@@ -62,7 +35,7 @@ class GameBoard extends React.Component {
                 guesses: obj.guesses,
                 revealCode: obj.revealCode,
                 timer: obj.timer,
-                // options: obj.options
+                options: obj.options
             })      
         })
         console.log(this.state)
@@ -136,7 +109,7 @@ class GameBoard extends React.Component {
             return <ReplayButton options={this.state.options} startGame={this.startGame}/>
         }
     }
-    //will add a 'play again' button to display at end of game
+
     render() {
         return (
             <section className='game-container'>

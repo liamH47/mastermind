@@ -32,7 +32,6 @@ class GuessForm extends Component {
         return optArray.map(num => <GuessButton tries={tries} isDisabled={guessArray.length} source={`${num}`} key={num} clickHandler={this.clickHandler}/>);
     }
 
-
     renderCurrent = () => {
         const { guessArray } = this.state;
         if(guessArray.length) {
