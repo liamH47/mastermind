@@ -212,10 +212,18 @@ body {
   font-size: 1.5em;
 }
 
+.feedback-info {
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
 .feedback-key {
   align-items: center;
   justify-content: center;
   display: flex;
+  float: left;
 }
 
 .feedback-key img {
