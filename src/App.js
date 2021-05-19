@@ -1,15 +1,12 @@
 import './App.css';
-import GameBoard from './Components/GameBoard';
-// import TestBoard from './Components/TestBoard';
+import GameContainer from './Components/GameContainer';
 
 function App() {
   return (
     <div className="App" >
-      <GameBoard />
+      <GameContainer />
     </div>
   );
 }
 
 export default App;
-
-// style={{ backgroundImage: 'url(/img/background/mario.jpg)'}}

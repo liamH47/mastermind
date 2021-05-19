@@ -18,15 +18,14 @@ class Timer extends Component {
         };
     }
 
-
     componentWillUnmount(){
         clearInterval(this.interval);
     }
 
     render() {
         return (
-            <div>
-                <p>Time: {this.state.count}</p>
+            <div className='timer-container'>
+                <h3>Time: {this.state.count}</h3>
             </div>
         )
     }
