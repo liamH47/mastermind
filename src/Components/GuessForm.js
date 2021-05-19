@@ -8,7 +8,6 @@ class GuessForm extends Component {
     }
 
     clickHandler = (num) => {
-        console.log(" num in clickhandle:", num)
         this.setState({ guessArray: [...this.state.guessArray, num]})
     }
 

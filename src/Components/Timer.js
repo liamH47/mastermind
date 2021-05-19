@@ -5,6 +5,7 @@ class Timer extends Component {
     state = {
         count: this.props.count
     }
+    
     componentDidMount() {
         if(this.props.tries > 0){
             this.interval = setInterval(() => {

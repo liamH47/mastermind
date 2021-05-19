@@ -14,7 +14,6 @@ class StartForm extends Component {
     localStartHandler = (e) => {
         e.preventDefault();
         const { startGame } = this.props;
-        console.log("clicked, state:", this.state);
         startGame(this.state);
     }
 
