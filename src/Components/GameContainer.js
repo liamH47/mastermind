@@ -39,13 +39,11 @@ class GameContainer extends React.Component {
                 options: obj.options
             })      
         })
-        console.log(this.state)
     }
 
     submitHandler = (arr) => {
         let secret = this.state.secretCode;
         this.checkGuess(arr, secret)
-        console.log(arr, secret);
     }
     checkGuess = (userGuess, code) => {
         let guessObj = {
@@ -67,7 +65,7 @@ class GameContainer extends React.Component {
             return this.setState({
                 guesses: [...this.state.guesses, guessObj],
                 revealCode: !this.state.revealCode,
-                score: this.state.score + 1 + this.state.tries,
+                score: this.state.score + this.state.tries,
                 tries: this.state.tries - 1                  
             })          
         }

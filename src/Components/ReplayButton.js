@@ -14,8 +14,7 @@ class ReplayButton extends Component {
     localStartHandler = (e) => {
         e.preventDefault();
         const { startGame } = this.props;
-        console.log("clicked")
-        startGame(this.state)
+        startGame(this.state);
     }
 
 

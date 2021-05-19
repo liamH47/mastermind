@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 
 class CodeContainer extends Component {
 
-    componentDidMount() {
-        console.log('codecontainer props:', this.props)
-    }
-
     renderSecret(){
         if(this.props.revealCode || this.props.tries === 0){
             return this.props.secret.map((number, index) => <img key={index} alt={number} src={`/img/chars/${number}.jpg`}></img>)
