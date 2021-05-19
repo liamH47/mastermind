@@ -39,21 +39,21 @@ class GameBoard extends React.Component {
         secretCode: [],
         tries: 10,
         gameStarted: false,
-        options: [0,1,2,3,4,5,6,7],
+        options: 8,
         guesses: [],
         revealCode: false,
         score: 0,
         timer: 0
     };
 
-    getCode = () => {
-        return axios.get('http://localhost:3001/rng')
+    getCode = (num) => {
+        return axios.get(`http://localhost:3001/rng/${num}`)
         .then(response => response.data)
     };
 
     startGame = (obj) => {
 
-        this.getCode()
+        this.getCode(this.state.options - 1)
         .then((code) => {
             this.setState({
                 secretCode: code,
@@ -133,7 +133,7 @@ class GameBoard extends React.Component {
     renderReplayButton = () => {
         const { tries, revealCode } = this.state;
         if(revealCode || tries === 0){
-            return <ReplayButton startGame={this.startGame}/>
+            return <ReplayButton options={this.state.options} startGame={this.startGame}/>
         }
     }
     //will add a 'play again' button to display at end of game

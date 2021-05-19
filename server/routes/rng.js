@@ -19,30 +19,8 @@ const router = express.Router();
         //     console.log(result.random.data); // [55, 3]
         //   }); 
         
-    router.get('/', (req, res) => {
-        axios.post('https://api.random.org/json-rpc/2/invoke', {
-            
-                "jsonrpc": "2.0",
-                "method": "generateIntegers",
-                "params": {
-                    "apiKey": process.env.apiKey,
-                    "n": 4,
-                    "min": 0,
-                    "max": 7,
-                    "replacement": true,
-                    "base": 10
-                },
-                "id": 20136
-                       
-        })
-        .then(resp => res.send(resp.data.result.random.data))
-        .catch(error => res.send(error))
-    })
-
-
-
-    // router.get(`/:id`, (req, res) => {
-    //     axios.post(`https://api.random.org/json-rpc/2/invoke`, {
+    // router.get('/', (req, res) => {
+    //     axios.post('https://api.random.org/json-rpc/2/invoke', {
             
     //             "jsonrpc": "2.0",
     //             "method": "generateIntegers",
@@ -50,7 +28,7 @@ const router = express.Router();
     //                 "apiKey": process.env.apiKey,
     //                 "n": 4,
     //                 "min": 0,
-    //                 "max": req.params.id,
+    //                 "max": 7,
     //                 "replacement": true,
     //                 "base": 10
     //             },
@@ -60,6 +38,28 @@ const router = express.Router();
     //     .then(resp => res.send(resp.data.result.random.data))
     //     .catch(error => res.send(error))
     // })
+
+
+
+    router.get(`/:id`, (req, res) => {
+        axios.post(`https://api.random.org/json-rpc/2/invoke`, {
+            
+                "jsonrpc": "2.0",
+                "method": "generateIntegers",
+                "params": {
+                    "apiKey": process.env.apiKey,
+                    "n": 4,
+                    "min": 0,
+                    "max": req.params.id,
+                    "replacement": true,
+                    "base": 10
+                },
+                "id": 20136
+                       
+        })
+        .then(resp => res.send(resp.data.result.random.data))
+        .catch(error => res.send(error))
+    })
 
 export default router;
 

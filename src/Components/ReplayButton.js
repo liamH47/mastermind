@@ -12,7 +12,9 @@ class ReplayButton extends Component {
         tries: 10,
         gameStarted: true,
         guesses: [],
-        revealCode: false
+        revealCode: false,
+        // options: this.props.options
+
     }
 
     localStartHandler = (e) => {
