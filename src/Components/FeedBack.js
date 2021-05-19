@@ -4,11 +4,12 @@ import React, { Component } from 'react';
 class FeedBack extends Component {
 
     render() {
+        const { feedBack } = this.props;
         return (
             <div className='feedback-square'>
-                {this.props.feedBack ? 
+                {feedBack ? 
                 <div style={{
-                    background: `url(/img/feedback/${this.props.feedBack}.png) center/cover no-repeat`
+                    background: `url(/img/feedback/${feedBack}.png) center/cover no-repeat`
                 }}>
                 </div> 
                 : null}

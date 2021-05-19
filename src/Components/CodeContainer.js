@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 class CodeContainer extends Component {
 
     renderSecret(){
-        if(this.props.revealCode || this.props.tries === 0){
-            return this.props.secret.map((number, index) => <img key={index} alt={number} src={`/img/chars/${number}.jpg`}></img>)
+        const { revealCode, secret, tries } = this.props;
+        if(revealCode || tries === 0){
+            return secret.map((number, index) => <img key={index} alt={number} src={`/img/chars/${number}.jpg`}></img>)
         } else {
-            return this.props.secret.map((number, index) => <img key={index} alt={number} src="/img/mystery/block.jpg"></img>)
+            return secret.map((number, index) => <img key={index} alt={number} src="/img/mystery/block.jpg"></img>)
         }
     }
 
